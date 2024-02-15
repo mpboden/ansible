@@ -1,0 +1,123 @@
+---
+
+- hosts: all 
+  become: false
+  pre_tasks:
+
+    - name: install updates
+      become: true
+      tags: always
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: 'yes'
+      changed_when: false
+
+
+- hosts: all
+  become: false
+  tasks:
+
+    - name: Run Role
+      tags: [ never, debug ]
+      include_role:
+        name: whoami
+
+    - name: Set roles
+      ansible.builtin.set_fact:
+        run_roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or core_roles | difference(exclude_roles | default([])) }}"
+      tags:
+        - always
+
+    - name: Display roles
+      ansible.builtin.debug:
+        var: run_roles
+      tags:
+        - always
+    
+    - name: Run roles
+      include_role:
+        apply:
+          tags:
+            - "{{ roles_item }}"
+        name: "{{ roles_item }}"
+      loop_control:
+        loop_var: roles_item
+      with_items: "{{ run_roles }}"
+      tags:
+        - always         
+
+
+- hosts: vm
+  become: false
+  tasks:
+
+    - name: Run Role
+      include_role:
+        name: ssh
+
+- hosts: laptop
+  become: false
+  #  become_user: ansel
+  tasks:
+
+    - name: Set roles
+      ansible.builtin.set_fact:
+        run_roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or core_roles | difference(exclude_roles | default([])) }}"
+      tags:
+        - always
+
+    - name: Display roles
+      ansible.builtin.debug:
+        var: run_roles
+      tags:
+        - always
+    
+    - name: Run roles
+      include_role:
+        apply:
+          tags:
+            - "{{ roles_item }}"
+        name: "{{ roles_item }}"
+      loop_control:
+        loop_var: roles_item
+      with_items: "{{ run_roles }}"
+      tags:
+        - always         
+
+
+- hosts: home
+  become: false
+  tasks:
+    
+    - name: install packages on gamekeeper
+      become: true
+      tags: gamekeeper,home
+      ansible.builtin.apt:
+        name:
+          - samba
+          - nala
+          - ethtool
+          - tree
+          - fail2ban
+          - nmap
+          - fdisk
+          - ssmtp
+          - apache2
+          - php
+        state: latest
+
+
+- hosts: sebastopol
+  become: false
+  tasks:
+   
+    - name: install packages for raspberryPi
+      become: true
+      tags: raspberrypi,sebastopol
+      ansible.builtin.apt:
+        name:
+          - nala
+          - fail2ban
+          - ssmtp
+          - tree
+        state: latest

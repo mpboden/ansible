@@ -1,0 +1,31 @@
+---
+- name: get whoami
+  command: whoami
+  register: whoami
+  tags:
+    - never
+    - debug
+
+- name: print whoami
+  debug: var=whoami.stdout
+  tags:
+    - never
+    - debug
+
+- name: print ansible_user_id
+  debug: var=ansible_user_id
+  tags:
+    - never
+    - debug
+
+- name: debug specified user's home dir through ansible.env
+  debug: var=ansible_env.HOME
+  tags:
+    - never
+    - debug
+
+- name: debug specified user's home dir through lookup on env. This local environment only, not remote.
+  debug: var=lookup('env','HOME')
+  tags:
+    - never
+    - debug
