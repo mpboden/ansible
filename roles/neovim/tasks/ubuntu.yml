@@ -31,7 +31,7 @@
 
 - name: "Neovim | Create symlink to nvim"
   ansible.builtin.file:
-    src: "{{ ansible_user_dir }}/nvim-linux64/bin/nvim"
+    src: "{{ ansible_user_dir }}/bin/nvim-linux64/bin/nvim"
     dest: "{{ ansible_user_dir }}/bin/nvim"
     state: link
     force: true
