@@ -16,41 +16,31 @@
 - name: "Neovim | Add repository" 
   apt_repository: repo="ppa:neovim-ppa/stable" state=present
   become: true
-#  ansible.builtin.apt_repository:
-#  repo: ppa:neovim-ppa/stable
-#https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
 
-#- name: Create temporary directory 
-#  ansible.builtin.tempfile:
-#    state: directory
-#    suffix: unique_suffix
-#  register: temp_dir
-#  
-#- name: Download File
-#  ansible.builtin.get_url:
-#    url: "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz"
-#    dest: "{{ temp_dir.path }}/nvim-linux64.tar.gz"
-#    
-## Unzip the GZ files
-#- name: Extract all of the GZ files
-#  ansible.builtin.command: find "{{ temp_dir.path }}" -name '*.gz' -exec gzip -d {} \;
 - name: Create a directory if it does not exist
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/temp"
+    path: "{{ ansible_user_dir }}/bin"
     state: directory
     mode: '0755'
     
 - name: Unarchive a file that needs to be downloaded (added in 2.0)
   ansible.builtin.unarchive:
     src: https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
-    dest: "{{ ansible_user_dir }}/temp"
+    dest: "{{ ansible_user_dir }}/bin"
     remote_src: yes
-    
-- name: "Neovim | Install"
-  ansible.builtin.apt:
-    name: neovim
-    state: present
-  become: true
+
+- name: "Neovim | Create symlink to nvim"
+  ansible.builtin.file:
+    src: "{{ ansible_user_dir }}/nvim-linux64/bin/nvim"
+    dest: "{{ ansible_user_dir }}/bin/nvim"
+    state: link
+    force: true
+
+#- name: "Neovim | Install"
+#  ansible.builtin.apt:
+#    name: neovim
+#    state: present
+#  become: true
 
 - name: "Neovim | Config folder"
   ansible.builtin.file:
