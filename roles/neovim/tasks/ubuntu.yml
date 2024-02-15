@@ -14,7 +14,7 @@
   become: true
 
 - name: "Neovim | Add repository" 
-  apt_repository: repo="ppa:neovim-ppa/stable" state=preset
+  apt_repository: repo="ppa:neovim-ppa/stable" state=present
   become: true
 #  ansible.builtin.apt_repository:
 #  repo: ppa:neovim-ppa/stable
