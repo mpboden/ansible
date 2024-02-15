@@ -84,7 +84,7 @@ set -e
 # Paths
 CONFIG_DIR="$HOME/.config/dotfiles"
 VAULT_SECRET="$HOME/.vault_key"
-DOTFILES_DIR="$HOME/test_dotfiles"
+DOTFILES_DIR="$HOME/.dotfiles"
 SSH_DIR="$HOME/.ssh"
 IS_FIRST_RUN="$HOME/.dotfiles_run"
 
