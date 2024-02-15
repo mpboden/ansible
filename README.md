@@ -4,10 +4,6 @@ INSTALL
 
 bash -c "$(curl -fsSl https://raw.githubusercontent.com/mpboden/ansible/master/bin/dotfiles)"
 
-To start, run `install` script, which will add ansible ppa and install ansible
-  $ ./install
-
-
 
 INFO
 
