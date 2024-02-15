@@ -18,7 +18,29 @@
   become: true
 #  ansible.builtin.apt_repository:
 #  repo: ppa:neovim-ppa/stable
+#https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
 
+#- name: Create temporary directory 
+#  ansible.builtin.tempfile:
+#    state: directory
+#    suffix: unique_suffix
+#  register: temp_dir
+#  
+#- name: Download File
+#  ansible.builtin.get_url:
+#    url: "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz"
+#    dest: "{{ temp_dir.path }}/nvim-linux64.tar.gz"
+#    
+## Unzip the GZ files
+#- name: Extract all of the GZ files
+#  ansible.builtin.command: find "{{ temp_dir.path }}" -name '*.gz' -exec gzip -d {} \;
+
+- name: Unarchive a file that needs to be downloaded (added in 2.0)
+  ansible.builtin.unarchive:
+    src: https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
+    dest: "{{ ansible_user_dir }}/temp"
+    remote_src: yes
+    
 - name: "Neovim | Install"
   ansible.builtin.apt:
     name: neovim
