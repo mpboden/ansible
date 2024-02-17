@@ -32,7 +32,8 @@
   ansible.builtin.copy:
     src: "{{ item.stat.path }}"
     dest: "{{ backup_dir }}"
-  with_items: "{{ stat_result.results }}"
+  #  with_items: "{{ stat_result.results }}"
+  loop: "{{ stat_result.results }}"
   when: item.stat.exists == True
   #  loop_control:
   #    label: "{{ item.name }}"
