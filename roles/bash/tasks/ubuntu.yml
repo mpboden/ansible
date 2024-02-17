@@ -33,7 +33,7 @@
 - name: Backup Files
   ansible.builtin.copy:
     src: "{{ ansible_user_dir }}/{{ item }}"
-    dest: "{{ ansible_user_dir }}/{{ backup_dir }}"
+    dest: "{{ backup_dir }}"
   with_items: "{{ old_dotfiles }}"
   when: stat_result == True
 
