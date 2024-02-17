@@ -18,6 +18,7 @@
     remote_src: yes
   with_items: "{{ old_dotfiles }}"
   when: first_run.stat.islnk is not defined 
+  # todo: add conditional to check if file exists before copying
 
 - name: "Bash | Create symlinks"
   ansible.builtin.file:
