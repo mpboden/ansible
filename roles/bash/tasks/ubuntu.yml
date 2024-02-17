@@ -26,7 +26,9 @@
     src: "{{ ansible_user_dir }}/{{ item }}"
     dest: "{{ backup_dir }}"
   with_items: "{{ old_dotfiles }}"
-  when: stat_result.item == "{{ item }}" and stat_result.item.stat.exists == True
+  vars:
+    filename: "{{ item }}"
+  when: stat_result.item == "{{ filename }}" and stat_result.item.stat.exists == True
 
 #- name: "Bash | Copy old dotfiles"
 #  ansible.builtin.copy:
