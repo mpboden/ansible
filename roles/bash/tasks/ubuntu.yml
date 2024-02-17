@@ -11,14 +11,31 @@
    mode: '0755'
   when: first_run.stat.islnk is not defined 
 
-- name: "Bash | Copy old dotfiles to backup directory"
-  ansible.builtin.copy:
-    src: "{{ ansible_user_dir }}/{{ item }}"
-    dest: "{{ backup_dir }}"
-    remote_src: yes
+#- name: "Bash | Copy old dotfiles to backup directory"
+#  ansible.builtin.copy:
+#    src: "{{ ansible_user_dir }}/{{ item }}"
+#    dest: "{{ backup_dir }}"
+#    remote_src: yes
+#  with_items: "{{ old_dotfiles }}"
+#  when: first_run.stat.islnk is not defined 
+#  # todo: add conditional to check if file exists before copying
+
+- name: "Checking if config files exists"
+  ansible.builtin.stat:
+    path: "{{ item }}"
   with_items: "{{ old_dotfiles }}"
-  when: first_run.stat.islnk is not defined 
-  # todo: add conditional to check if file exists before copying
+  register: stat_result
+
+- name: Ansible
+  debug:
+    msg: "{{ stat_result }}"
+
+- name: Backup Files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ backup_dir }}"
+  with_items: "{{ old_dotfiles }}"
+  when: stat_result == "True"
 
 - name: "Bash | Create symlinks"
   ansible.builtin.file:
@@ -27,4 +44,3 @@
     state: link
     force: true
   with_fileglob: "files/*"
-
