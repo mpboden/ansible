@@ -28,7 +28,7 @@
   with_items: "{{ old_dotfiles }}"
   vars:
     filename: "{{ item }}"
-  when: stat_result.item == "{{ filename }}" and stat_result.item.stat.exists == True
+  when: stat_result.item == filename  and stat_result.item.stat.exists == True
 
 #- name: "Bash | Copy old dotfiles"
 #  ansible.builtin.copy:
