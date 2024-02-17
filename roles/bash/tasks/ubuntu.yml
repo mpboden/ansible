@@ -34,8 +34,10 @@
   ansible.builtin.copy:
     src: "{{ ansible_user_dir }}/{{ item }}"
     dest: "{{ backup_dir }}"
-  with_items: "{{ old_dotfiles }}"
-  when: stat_result == True
+  with_items: "{{ stat_result.results }}"
+  when: item.stat.exists == True
+  #  with_items: "{{ old_dotfiles }}"
+  #  when: stat_result == True
 
 #- name: "Bash | Create symlinks"
 #  ansible.builtin.file:
