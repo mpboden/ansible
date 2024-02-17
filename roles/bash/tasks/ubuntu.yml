@@ -22,7 +22,7 @@
 
 - name: "Checking if config files exists"
   ansible.builtin.stat:
-    path: "{{ item }}"
+    path: "{{ ansible_user_dir }}/{{ item }}"
   with_items: "{{ old_dotfiles }}"
   register: stat_result
 
@@ -32,8 +32,8 @@
 
 - name: Backup Files
   ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: "{{ backup_dir }}"
+    src: "{{ ansible_user_dir }}/{{ item }}"
+    dest: "{{ ansible_user_dir }}/{{ backup_dir }}"
   with_items: "{{ old_dotfiles }}"
   when: stat_result == "True"
 
