@@ -1,15 +1,13 @@
 ---
 old_dotfiles:
-  - .test_file_1
-  - .test_file_2
-  #  - .aliases
-  #  - .bash_profile
-  #  - .bash_prompt
-  #  - .bashrc
-  #  - .dircolors
-  #  - .exports
-  #  - .functions
-  #  - .path
+  - .aliases
+  - .bash_profile
+  - .bash_prompt
+  - .bashrc
+  - .dircolors
+  - .exports
+  - .functions
+  - .path
 
 first_run: "{{ ansible_user_dir }}/.dotfiles_run"
 

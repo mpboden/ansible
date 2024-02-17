@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+
+# Easier navigation: .., ..., ...., ....., ~ and -
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+
+# Shortcuts
+alias g="git"
+alias h="history"
+alias j="jobs"
+
+#timeformat=""
+timeformat="--time-style long-iso"
+colorflag=""
+lscommand="ls"
+
+if [[ "$OSTYPE" == "freebsd"* ]] && [ ! -x /usr/local/bin/gls ]; then
+	timeformat="-D '%F %R'"
+fi
+
+# enable color support of ls and grep
+if [ ! -z ${COLOR_THEME=x} ]; then # if COLOR_THEME is set
+	if [ -L ~/.dircolors ]; then
+		unlink ~/.dircolors
+	fi
+
+	# setup colored list directory contents
+	if [ -x /usr/bin/dircolors ] || [ -x /usr/local/bin/gdircolors ]; then
+		
+		# create symlink to .dircolors based on theme
+		if [ "$COLOR_THEME" == "Solarized_Dark" ]; then
+			ln -s ~/dotfiles/dircolors.ansi-solarized_dark ~/.dircolors
+		elif [ "$COLOR_THEME" == "Solarized_Light" ]; then
+			ln -s ~/dotfiles/dircolors.ansi-solarized_light ~/.dircolors
+		fi
+	
+		# export LS_COLORS based on OS version
+		if [[ "$OSTYPE" == "freebsd"* ]]; then
+			test -r ~/.dircolors && eval "$(gdircolors -b ~/.dircolors)" || eval "$(gdircolors -b)"
+		elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+			test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+		fi
+		# maybe add elif dircolors or gdircolors does not exist
+		# this will export LSCOLORS with Solarized Dark theme to work
+		#	with standard `ls` command and display colors for basic directories and files
+		#
+		#	dotdir=$HOME/dotfiles
+		#	file="lscolors"
+		#	
+		#	if [[ "$OSTYPE" == "freebsd"8 ]]; then
+		#		[ -r "$dotdir/$file ] && [ -f "$dotdir/$file" ] && source "$dotdir/$file";
+		#	fi
+		
+	fi
+
+	# Detect which `ls` flavor is in use
+	# Detect which OS to define colorflag for both ls and grep
+	if [[ "$OSTYPE" == "freebsd"* ]] && [ ! -x /usr/local/bin/gls ]; then
+		colorflag="-G"
+	else
+		colorflag="--color"
+	fi
+
+	# Use colordiff in place of diff
+	if [ -x /usr/bin/colordiff ]; then
+		alias diff="colordiff"
+	fi
+fi
+
+if [[ "$OSTYPE" == "freebsd"* ]] && [ -x /usr/local/bin/gls ]; then
+	lscommand="gls" # from GNU Core Utilities: coreutils
+fi
+
+# List all files colorized in long format
+alias l="${lscommand} -lFh ${timeformat} ${colorflag}"
+alias ll="${lscommand} -lFh ${timeformat} ${colorflag}"
+
+# List all files colorized in long format, including dot files
+alias la="${lscommand} -lAFh ${timeformat} ${colorflag}"
+
+# List only directories
+alias lsd="${lscommand} -lFh ${timeformat} ${colorflag} | grep --color=never '^d'"
+
+# Always use color output for `ls`
+alias ls="command ${lscommand} ${colorflag}"
+
+# Always enable colored `grep` output
+# Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Enable aliases to be sudo'ed
+alias sudo='sudo '
+
+# Get week number
+alias week='date +%V'
+
+# Stopwatch
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
+# IP addresses
+#alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+#alias localip="ifconfig -a bond0"
+#alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+# Canonical hex dump; some systems have this symlinked
+command -v hd > /dev/null || alias hd="hexdump -C"
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map="xargs -n1"
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec $SHELL -l"
+
+# allow ls color when piped to less
+alias less='less -R'
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
+alias vim='nvim'
