@@ -22,7 +22,7 @@
 - name: "Bash | Create symlinks"
   ansible.builtin.file:
     src: "{{ item }}"
-    dest: "{{ ansible_user_dir }}/.{{ item }}"
+    dest: "{{ ansible_user_dir }}/.{{ item | basename }}"
     state: link
     force: true
   with_fileglob: "files/*"
