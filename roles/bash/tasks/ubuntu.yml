@@ -35,8 +35,7 @@
     src: "{{ ansible_user_dir }}/{{ item }}"
     dest: "{{ ansible_user_dir }}/{{ backup_dir }}"
   with_items: "{{ old_dotfiles }}"
-  when: stat_result.stat.exists == true
-  #  when: stat_result == "True"
+  when: stat_result == True
 
 #- name: "Bash | Create symlinks"
 #  ansible.builtin.file:
