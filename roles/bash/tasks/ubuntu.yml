@@ -15,7 +15,7 @@
 # copy old dotfiles to directory
 - name: "Bash | Copy old dotfiles to backup directory"
   ansible.builtin.copy:
-    remote_src: "{{ item }}"
+    remote_src: "{{ ansible_user_dir }}/{{ item }}"
     dest: "{{ ansible_user_dir }}/.dotfiles_run"
   with_items: "{{ old_dotfiles }}"
   when: first_run.stat.islnk is not defined 
