@@ -10,3 +10,7 @@ old_dotfiles:
   #  - .exports
   #  - .functions
   #  - .path
+
+first_run: "{{ ansible_user_dir }}/.dotfiles_run"
+
+backup_dir: "{{ ansible_user_dir }}/.dotfiles_backup"

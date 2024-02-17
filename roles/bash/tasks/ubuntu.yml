@@ -1,13 +1,15 @@
 ---
 - name: "Bash | Check if first run"
   stat:
-    path: "{{ ansible_user_dir }}/.dotfiles_run"
+    #    path: "{{ ansible_user_dir }}/.dotfiles_run"
+    path: "{{ first_run }}"
   register: first_run
 
 # create backup directory for old dotfiles
 - name: "Bash | Create backup directory"
   ansible.builtin.file:
-   path: "{{ ansible_user_dir }}/.dotfiles_backup"
+    #   path: "{{ ansible_user_dir }}/.dotfiles_backup"
+   path: "{{ backup_dir }}"
    state: directory
    mode: '0755'
   when: first_run.stat.islnk is not defined 
@@ -16,7 +18,8 @@
 - name: "Bash | Copy old dotfiles to backup directory"
   ansible.builtin.copy:
     src: "{{ ansible_user_dir }}/{{ item }}"
-    dest: "{{ ansible_user_dir }}/.dotfiles_run"
+    #    dest: "{{ ansible_user_dir }}/.dotfiles_backup"
+    dest: "{{ backup_dir }}"
     remote_src: yes
   with_items: "{{ old_dotfiles }}"
   when: first_run.stat.islnk is not defined 
