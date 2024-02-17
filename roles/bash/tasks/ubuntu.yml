@@ -32,7 +32,8 @@
 
 - name: Backup Files
   ansible.builtin.copy:
-    src: "{{ ansible_user_dir }}/{{ item }}"
+    src: "{{ item.path }}"
+    #    src: "{{ ansible_user_dir }}/{{ item }}"
     dest: "{{ backup_dir }}"
   with_items: "{{ stat_result.results }}"
   when: item.stat.exists == True
