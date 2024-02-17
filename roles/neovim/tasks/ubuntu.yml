@@ -2,7 +2,7 @@
 - name: "Neovim | Dependencies"
   ansible.builtin.apt:
     name:
-      - nodejs
+      - npm
       - cmake
       - curl
       - pkg-config
