@@ -36,7 +36,7 @@
   loop: "{{ stat_result.results }}"
   when: item.stat.exists == True
   loop_control:
-    label: "{{ item.name }}"
+    label: "{{ item.item }}"
 
 #- name: "Bash | Create symlinks"
 #  ansible.builtin.file:
