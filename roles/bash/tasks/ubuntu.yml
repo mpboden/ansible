@@ -38,13 +38,21 @@
     force: true
   with_fileglob: "files/*"
 
+- name: "Bash | Dependencies for 'now' script"
+  ansible.builtin.apt:
+    name:
+      - ncal
+      - toilet
+    state: present
+  become: true
+
 - name: "Bash | Copy 'now' script"
   ansible.builtin.copy:
     src: "{{ role_path}}/files/scripts/{{ now_script }}"
     dest: "{{ role_path}}/files/scripts/{{ now_script }}"
     mode: '0700'
     
-- name: "Bash | Create symlink for now script"
+- name: "Bash | Create symlink for 'now' script"
   ansible.builtin.file:
     src: "{{ role_path}}/files/scripts/{{ now_script }}"
     dest: "{{ ansible_user_dir }}/bin/{{ now_script }}"
