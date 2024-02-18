@@ -21,20 +21,13 @@
   debug:
     msg: "{{ stat_result }}"
 
-#- name: Temp test
-#  ansible.builtin.copy:
-#    src: "{{ ansible_user_dir }}/{{ item }}"
-#    dest: "{{ backup_dir }}"
-#  with_items: "{{ old_dotfiles }}"
-#  when: stat_result.item.name == item and stat_result.item.stat.exists == True
-
 - name: "Bash | Copy old dotfiles"
   ansible.builtin.copy:
     src: "{{ item.stat.path }}"
     dest: "{{ backup_dir }}"
   #  with_items: "{{ stat_result.results }}"
   loop: "{{ stat_result.results }}"
-  when: item.stat.exists == True
+  when: item.stat.exists == True and first_run.stat.islnk is not defined
   loop_control:
     label: "{{ item.item }}"
 
