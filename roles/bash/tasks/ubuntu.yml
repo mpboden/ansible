@@ -40,7 +40,7 @@
 
 - name: "Bash | Copy 'now' script"
   ansible.builtin.copy:
-    path: "{{ role_path}}/files/scripts/{{ now_script }}"
+    src: "{{ role_path}}/files/scripts/{{ now_script }}"
     dest: "{{ role_path}}/files/scripts/{{ now_script }}"
     mode: '0700'
     
