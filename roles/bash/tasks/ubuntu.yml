@@ -40,7 +40,7 @@
 
 - name: "Bash | Create symlink for now script"
   ansible.builtin.file:
-    src: "{{ role_path}}/files/{{ now_script }}"
+    src: "{{ role_path}}/files/scripts/{{ now_script }}"
     dest: "{{ ansible_user_dir }}/bin/{{ now_script }}"
     state: link
     force: true
