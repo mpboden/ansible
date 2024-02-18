@@ -39,7 +39,7 @@
   with_fileglob: "files/*"
 
 - name: "Bash | Create symlink for now script"
-  ansbible.builtin.file:
+  ansible.builtin.file:
     src: "files/{{ now_script }}"
     dest: "{{ ansible_user_dir  }}/bin/{{ now_script }}"
     state: link
