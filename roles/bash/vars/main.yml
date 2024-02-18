@@ -12,3 +12,5 @@ old_dotfiles:
 first_run: "{{ ansible_user_dir }}/.dotfiles_run"
 
 backup_dir: "{{ ansible_user_dir }}/.dotfiles_backup"
+
+now_script: "now"
