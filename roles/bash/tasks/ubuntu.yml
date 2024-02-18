@@ -41,12 +41,12 @@
 - name: "Bash | Copy 'now' script"
   ansible.builtin.file:
     path: "{{ role_path}}/files/scripts/{{ now_script }}"
-    dest: "{{ role_path}}/files/scripts/{{ now_script }}"
+    dest: "{{ role_path}}/files/scripts/{{ now_script }}_script"
     mode: '0700'
     
 - name: "Bash | Create symlink for now script"
   ansible.builtin.file:
-    src: "{{ role_path}}/files/scripts/{{ now_script }}"
+    src: "{{ role_path}}/files/scripts/{{ now_script }}_script"
     dest: "{{ ansible_user_dir }}/bin/{{ now_script }}"
     state: link
     force: true
