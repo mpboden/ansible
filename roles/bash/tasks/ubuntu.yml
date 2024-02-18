@@ -47,5 +47,5 @@
 
 - name: "Bash | Make 'now' script executable"
   ansible.builtin.file:
-    path: "{{ role_path}}/files/{{ now_script }}"
+    path: "{{ role_path}}/files/scripts/{{ now_script }}"
     mode: '0700'
