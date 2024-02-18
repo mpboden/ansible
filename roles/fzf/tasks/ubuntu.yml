@@ -4,3 +4,4 @@
   ansible.builtin.apt:
     name: fzf
     state: latest
+  become: true

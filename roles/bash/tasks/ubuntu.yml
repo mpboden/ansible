@@ -51,6 +51,7 @@
     src: "{{ role_path}}/files/scripts/{{ now_script }}"
     dest: "{{ role_path}}/files/scripts/{{ now_script }}"
     mode: '0700'
+  become: false
     
 - name: "Bash | Create symlink for 'now' script"
   ansible.builtin.file:
