@@ -1,0 +1,327 @@
+#!/bin/bash
+
+# NAME: now
+# PATH: $HOME/bin
+# DESC: Display current weather, calendar and time
+# CALL: Called from terminal or ~/.bash_profile
+# DATE: 4/18/23
+
+##################
+#
+# Cursor Movement
+#
+# direction				linux		freebsd
+# -------------------------------
+#	left  1					cub1		le
+#	right 1					cuf1		nd
+# up	  1 				cuu1		up
+# down	1					cud1		do
+# left  #					cub #		LE #
+# right #					cuf #		RI #
+# up    #					cuu #		UP #
+# down  #					cud #		DO #
+#
+##################
+
+
+# NOTE: To display all available toilet fonts use this one-liner:
+#       for i in ${TOILET_FONT_PATH:=/usr/share/figlet}/*.{t,f}lf; do j=${i##*/}; toilet -d "${i%/*}" -f "$j" "${j%.*}"; done
+
+bold="\e[1m";
+default="\e[0;39m";
+reset="\e[0m"				# reset to default fg/bg colors
+black="\e[0;30m";		# ANSI Black 				Solarized base02 	RGB   7  54  66
+blue="\e[0;34m";		# ANSI Blue					Solarized blue		RGB  38 139 210
+cyan="\e[0;36m";		# ANSI Cyan					Solarized cyan		RGB  42 161 152
+green="\e[0;32m";		# ANSI Green 				Solarized green 	RGB 133 153   0
+orange="\e[1;31m";	# ANSI Red Bold 		Solarized orange 	RGB 203  75  22 
+red="\e[0;31m";			# ANSI Red 					Solarized red			RGB 220  50  47
+magenta="\e[0;35m";	# ANSI Magenta			Solarized magenta	RGB 211  54 130
+violet="\e[1;35m";	# ANSI Magenta Bold	Solarized magenta	RGB 108 113 196
+yellow="\e[0;33m";	# ANSI Yellow				Soaraized yellow 	RGB 181 137   0
+base00="\e[1;33m";	# ANSI Yellow Bold	Solarized base00 	RGB 101 123 131
+base01="\e[1;32m";	# ANSI Green Bold		Solarized base01 	RGB  88 110 117
+base0="\e[1;34m";		# ANSI Blue Bold		Solarized base0  	RGB 131 148 150
+base1="\e[1;36m";		# ANSI Cyan Bold		Solarized base1		RGB 147 161 161
+white="\e[0;37m";		# ANSI White				Solarized base2		RGB 238 232 213
+base3="\e[1;37m";		# ANSI White Bold		Solarized base3		RGB 253 246 227
+
+reverse="\e[7m"			# reverse fg/bg colors
+
+terminalWidth=`expr $(tput cols) - 1`
+										# Reducing $terminalWidth by 1 is a hack to account
+										# for Termius app on iPhone. When Termius initially opens,
+										# output of `tput cols` is 80, which is technially wide 
+										# enough to print all items. However, this is a false value.
+										# After pringint, `tput cols` will display the true width,
+										# which is 56, and not 80.
+
+dateColumn=30				# column start of calendar
+timeColumn=51				# column start of clock
+weatherWidth=$dateColumn
+calendarWidth=`expr $timeColumn - $dateColumn`
+timeWidth=28
+weather=						# will be set to true if printed
+calendar=						# will be set to true if printed
+colsPrinted=0				# accumlative as items are printed
+printTime=					# will be set to true if space terminal width permits
+
+#--------- WEATHER ----------------------------------------------------------
+
+# Current weather, already in color so no need to override
+
+if type "curl" > /dev/null; then
+  ipaddress=`curl -s ipinfo.io/ip`
+  #city=`curl ipinfo.io/${ipaddress}/city --silent`
+  location="Culver%20City"
+  
+  if [[ $ipaddress == "73"* ]]; then 
+      location="Sebastopol"
+  fi
+
+  if [[ $ipaddress == "67"* ]]; then
+      location="Universal%20City"
+  fi
+  
+  curl wttr.in/${location}?0 --silent --max-time 3 > /tmp/weather
+fi
+
+if [ -s /tmp/weather ]; then	# if exists and > 0
+	echo " "
+	while IFS= read -r line; do
+		printf "${line}\n";
+	done < /tmp/weather	
+	echo " "
+	echo " "
+	
+	weather=true
+
+	colsPrinted=$weatherWidth
+
+	rm -f /tmp/weather
+fi
+
+#--------- DATE -------------------------------------------------------------
+
+# Calendar - current month with today highlighted.
+
+if [[ "$OSTYPE" == "freebsd"* ]]; then
+	if type "cal" > /dev/null; then
+		cal -h > /tmp/calendar			# -h Turns off highlighting of today (we will control)
+	fi
+elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+	if type "ncal" > /dev/null; then
+		ncal -h -b > /tmp/calendar	# -h Turns off highlighting of today (we will control)
+																# -b Use oldstyle format for ncal output
+	fi
+fi
+
+if [ -s /tmp/calendar ]; then	# if exists and > 0
+
+	if [[ "$weather" ]]; then
+		tput sc			# Save cursor position.
+	
+		# Move up 9 lines
+		#while [ $((++i)) -lt 10 ]; do tput cuu1; done
+		# Move up 9 lines
+		i=0
+		while [ $((++i)) -lt 10 ]; do
+			if [[ "$OSTYPE" == "freebsd"* ]]; then
+				tput up
+			elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+				tput cuu1
+			fi
+			#tput cuu1;
+		done
+
+		# Depending on length of your city name and country name you will:
+		#   1. Comment out next three lines of code. Uncomment fourth code line.
+		#   2. Change subtraction value and set number of print spaces to match
+		#      subtraction value. Then place comment on fourth code line.
+
+		#Column=$((${DateColumn} - 10))
+		#tput cuf ${Column}				# Move x column number
+		#printf "          "			# Blank out ", country" with x spaces
+		
+		# Position to column ${dateColumn} for date display
+		if [[ "$OSTYPE" == "freebsd"* ]]; then
+			tput RI ${dateColumn}
+		elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+			tput cuf ${dateColumn}
+		fi
+
+	fi
+
+	colsNeeded=`expr $colsPrinted + $calendarWidth`
+
+	if [[ ${colsNeeded} -lt ${terminalWidth} ]]; then
+		printCalendar=true
+	fi
+	
+	if [[ $printCalendar ]]; then
+		calLineCnt=1
+		today=$(date +"%-d")
+
+		# Prefix with space when length < 2 characters long
+		if [[ ${#today} < 2 ]] ; then
+		    today=" "${today}
+		fi
+
+		printf "${green}"
+
+		# IFS is the Internal Field Separator
+		# This is a special shell variable that consistes of a space, tab, & newline
+		# This is necessary because the `read` command is part of bash and is designed
+		#	to read words, not lines.
+		# Therefore, in this while loop, we set IFS to an empty string.
+		# The calendar stored in /tmp/calendar is passed into
+		# and read one line at a time.
+		#	The -r flag is needed to ignore any '\' special characters.
+		while IFS= read -r calendarLine; do
+			printf "${calendarLine}"
+			if [[ $calLineCnt > 2 ]] ; then
+				# See if today is on current line & invert background
+
+				# Move cursor left 22
+				if [[ "$OSTYPE" == "freebsd"* ]]; then
+					tput LE 22
+				elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+					tput cub 22
+				fi
+
+				for (( j=0 ; j <= 18 ; j += 3 )) ; do
+					currentDay=${calendarLine:$j:2}            # Current day on calendar line
+					if [[ "${currentDay}" == "${today}" ]] ; then
+						printf "${reverse}"	# reverse fg/bg colors for today
+						printf "$today"
+						printf "${reset}"
+						printf "${green}"
+						if [[ "$OSTYPE" == "freebsd"* ]]; then
+							tput nd
+						elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+							tput cuf1
+						fi
+					else
+						if [[ "$OSTYPE" == "freebsd"* ]]; then
+							tput RI 3
+						elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+							tput cuf 3
+						fi
+					fi
+				done
+			fi
+	
+			if [[ "$OSTYPE" == "freebsd"* ]]; then
+				tput do
+			elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+				tput cud1
+			fi
+			
+			if [[ "$weather" ]]; then
+				# Move to ${dateColumn}
+				if [[ "$OSTYPE" == "freebsd"* ]]; then
+					tput RI ${dateColumn}
+				elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+					tput cuf ${dateColumn}
+				fi
+			fi
+			
+			calLineCnt=$((++calLineCnt))
+		done < /tmp/calendar
+
+		printf "${reset}"			# reset all attributes to default
+		echo ""
+
+		if [[ "$weather" ]]; then
+			tput rc							# Restore saved cursor position
+		fi
+	
+		calendar=true
+		colsPrinted=`expr ${colsPrinted} + ${calendarWidth}`
+		rm -f /tmp/calendar
+	fi # end if [[ ${printCalendar ]]
+fi # end if [ -s /tmp/calendar ]
+
+
+#-------- TIME --------------------------------------------------------------
+
+if hash toilet 2>/dev/null; then
+	echo " "$(date +"%I:%M %P")" " | \
+	toilet -f future --filter border > /tmp/clock
+elif hash figlet 2>/dev/null; then
+	echo $(date +"%I:%M %P") | figlet > /tmp/clock
+else
+	echo $(date +"%I:%M %P") > /tmp/clock
+fi
+
+if [ -s /tmp/clock ]; then	# if exists and > 0
+	if [[ "$weather" && "$calendar" ]]; then
+		timeColumn=$timeColumn
+	elif [[ ! "$weather" && "$calendar" ]]; then
+		timeColumn=$calendarWidth
+	elif [[ "$weather" && ! "$calendar" ]]; then
+		timeColumn=$dateColumn
+	else
+		timeColumn=0
+	fi
+
+	colsNeeded=`expr $colsPrinted + $timeWidth`
+
+	if [[ ${colsNeeded} -lt ${terminalWidth} ]]; then
+		printTime=true
+	fi
+
+	if [[ ${printTime} ]]; then
+		if [[ "$weather" || "$calendar" ]]; then
+			tput sc                 # Save cursor position.
+	
+			# Move up 9 lines
+			i=0
+			while [ $((++i)) -lt 10 ]; do
+				if [[ "$OSTYPE" == "freebsd"* ]]; then
+					tput up
+				elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+					tput cuu1
+				fi
+				#tput cuu1;
+			done
+		fi
+
+		# Move to $timeColumn
+		if [[ "$OSTYPE" == "freebsd"* ]]; then
+			tput RI ${timeColumn}
+		elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+			tput cuf ${timeColumn}
+		fi
+
+		while IFS= read -r time; do
+   		printf "${cyan}"
+			printf "${time}"
+
+			# Move up one line
+			if [[ "$OSTYPE" == "freebsd"* ]]; then
+				tput up
+			elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+				tput cud1
+			fi
+	    #tput cud1               # Up one line
+	    
+			# Move to $timeColumne
+			if [[ "$OSTYPE" == "freebsd"* ]]; then
+				tput RI ${timeColumn}
+			elif [[ "$OSTYPE" == "linux-gnu" ]]; then
+				tput cuf ${timeColumn}
+			fi
+			#tput cuf ${timeColumn}    # Move to $timeColumn
+
+		done < /tmp/clock
+
+		if [[ "$weather" || "$calendar" ]]; then
+			tput rc                     # Restore saved cursor position.
+		fi
+	
+		rm -f /tmp/clock
+	fi # end $printTime
+fi # end if [ -s /tmp/clock ]
+
+exit 0
