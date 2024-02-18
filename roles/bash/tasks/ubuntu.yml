@@ -15,26 +15,25 @@
   ansible.builtin.stat:
     path: "{{ ansible_user_dir }}/{{ item }}"
   with_items: "{{ old_dotfiles }}"
-  register: stat_result
+  register: stat_results
 
-- name: Ansible
+- name: "Bash | Debug stat results"
   debug:
-    msg: "{{ stat_result }}"
+    msg: "{{ stat_results }}"
 
 - name: "Bash | Copy old dotfiles"
   ansible.builtin.copy:
     src: "{{ item.stat.path }}"
     dest: "{{ backup_dir }}"
-  #  with_items: "{{ stat_result.results }}"
-  loop: "{{ stat_result.results }}"
+  loop: "{{ stat_results.results }}"
   when: item.stat.exists == True and first_run.stat.islnk is not defined
   loop_control:
     label: "{{ item.item }}"
 
-#- name: "Bash | Create symlinks"
-#  ansible.builtin.file:
-#    src: "{{ item }}"
-#    dest: "{{ ansible_user_dir }}/.{{ item | basename }}"
-#    state: link
-#    force: true
-#  with_fileglob: "files/*"
+- name: "Bash | Create symlinks"
+  ansible.builtin.file:
+    src: "{{ item }}"
+    dest: "{{ ansible_user_dir }}/.{{ item | basename }}"
+    state: link
+    force: true
+  with_fileglob: "files/*"
