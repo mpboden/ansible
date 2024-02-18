@@ -17,9 +17,9 @@
   with_items: "{{ old_dotfiles }}"
   register: stat_results
 
-- name: "Bash | Debug stat results"
-  debug:
-    msg: "{{ stat_results }}"
+#- name: "Bash | Debug stat results"
+#  debug:
+#    msg: "{{ stat_results }}"
 
 - name: "Bash | Copy old dotfiles"
   ansible.builtin.copy:
