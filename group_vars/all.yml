@@ -9,7 +9,7 @@ core_roles:
   # - tree
   # - lua
   # - ethtool
-  # - fsf
+  - fzf
 
 laptop_roles:
   # - build-essential
