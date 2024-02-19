@@ -1,0 +1,7 @@
+---
+- name: install packages on laptop
+  ansible.builtin.apt:
+    name: tmux 
+    state: latest
+  become: true
+

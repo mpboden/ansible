@@ -5,7 +5,7 @@ core_roles:
   # - nala
   - neovim
   - ssh
-  # - tmux
+  - tmux
   # - tree
   # - lua
   # - ethtool
