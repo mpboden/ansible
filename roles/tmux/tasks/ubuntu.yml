@@ -1,7 +1,28 @@
 ---
-- name: install packages on laptop
+- name: "tmux | Install pacakge"
   ansible.builtin.apt:
     name: tmux 
     state: latest
   become: true
 
+- name: "tmux | Get stats on existing .tmux.conf"
+  ansible.builtin.stat:
+    path: "{{ ansible_user_dir }}/.tmux.conf"
+  register: stat_result
+
+- name: "tmux | Debug stat results"
+  debug:
+    msg: "{{ stat_result }}"
+
+#- name: "tmux | Copy old dotfile"
+#  ansible.builtin.copy:
+#    src: "{{ ansible_user_dir }}/.tmux.conf"
+#    dest: "{{ backup_dir }}"
+#  /hen: stat_result.exists == True and first_run.stat.islnk is not defined
+#
+#- name: "tmux | Create symlink"
+#  ansible.builtin.file:
+#    src: "{{ role_dir }}/files/tmux.conf"
+#    dest: "{{ ansible_user_dir }}/.tmux.conf"
+#    state: link
+#    force: true
