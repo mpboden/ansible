@@ -17,7 +17,7 @@
 - name: "tmux | Debug path exists and not a symlink"
   ansible.builtin.debug:
     msg: "Path exists and isn't a symlink"
-  when: stat_result.stat.islnk is defined and sym.stat.islnk == False
+  when: stat_result.stat.islnk is defined and stat_result.stat.islnk == False
 
 #- name: "tmux | Copy old dotfile"
 #  ansible.builtin.copy:
