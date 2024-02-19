@@ -14,12 +14,17 @@
   debug:
     msg: "{{ stat_result }}"
 
+- name: "tmux | Debug path exists and not a symlink"
+  ansible.builtin.debug:
+    msg: "Path exists and isn't a symlink"
+  when: stat_result.stat.islnk is defined and sym.stat.islnk == False
+
 #- name: "tmux | Copy old dotfile"
 #  ansible.builtin.copy:
 #    src: "{{ ansible_user_dir }}/.tmux.conf"
 #    dest: "{{ backup_dir }}"
-#  /hen: stat_result.exists == True and first_run.stat.islnk is not defined
-#
+#  when: stat_result.exists == True and first_run.stat.islnk is not defined
+
 #- name: "tmux | Create symlink"
 #  ansible.builtin.file:
 #    src: "{{ role_dir }}/files/tmux.conf"
