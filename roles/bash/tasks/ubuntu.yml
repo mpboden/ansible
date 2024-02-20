@@ -47,7 +47,7 @@
   ansible.builtin.copy:
     src: "{{ ansible_user_dir }}/.dircolors"
     dest: "{{ backup_dir }}"
-  when: stat_dircolor.stat.islnk is defined and stat_result.stat.islnk == False and first_run.stat.islnk is not defined
+  when: stat_dircolor.stat.islnk is defined and stat_dircolor.stat.islnk == False and first_run.stat.islnk is not defined
 
 - name: "tmux | Create symlink for .dircolors"
   ansible.builtin.file:
