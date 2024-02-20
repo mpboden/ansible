@@ -51,7 +51,7 @@
 
 - name: "tmux | Create symlink for .dircolors"
   ansible.builtin.file:
-    src: "{{ role_path }}/files/dircolors.ansi-solarized_dark"
+    src: "{{ role_path }}/files/solarized/dircolors.ansi-solarized_dark"
     dest: "{{ ansible_user_dir }}/.dircolors"
     state: link
     force: true
