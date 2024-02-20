@@ -4,7 +4,7 @@ old_dotfiles:
   - .bash_profile
   - .bash_prompt
   - .bashrc
-  - .dircolors
+  #  - .dircolors
   - .exports
   - .functions
   - .path
