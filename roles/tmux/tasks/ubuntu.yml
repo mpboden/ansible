@@ -5,9 +5,9 @@
     state: latest
   become: true
 
-- name: "tmux | Get stats on existing .tmux.conf"
+- name: "tmux | Get stats on existing .{{ conf_filename }}"
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.tmux.conf"
+    path: "{{ ansible_user_dir }}/.{{ conf_filename }}"
   register: stat_result
 
 - name: "tmux | Debug stat results"
@@ -21,13 +21,13 @@
 
 - name: "tmux | Copy old dotfile"
   ansible.builtin.copy:
-    src: "{{ ansible_user_dir }}/.tmux.conf"
+    src: "{{ ansible_user_dir }}/.{{ conf_filename }}"
     dest: "{{ backup_dir }}"
   when: stat_result.stat.islnk is defined and stat_result.stat.islnk == False and first_run.stat.islnk is not defined
 
 - name: "tmux | Create symlink"
   ansible.builtin.file:
-    src: "{{ role_path }}/files/tmux.conf"
-    dest: "{{ ansible_user_dir }}/.tmux.conf"
+    src: "{{ role_path }}/files/{{ conf_filename }}"
+    dest: "{{ ansible_user_dir }}/.{{ conf_filename }}"
     state: link
     force: true
