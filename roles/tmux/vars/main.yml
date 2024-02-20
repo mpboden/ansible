@@ -1,0 +1,3 @@
+backup_dir: "{{ ansible_user_dir }}/.dotfiles_backup"
+
+conf_filename: "tmux.conf"
