@@ -16,7 +16,7 @@ core_roles:
   - neovim
   - ssh
   - tmux
-  # - tree
+  - tree
   # - lua
   # - ethtool
   - fzf
