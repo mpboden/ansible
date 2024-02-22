@@ -1,5 +1,5 @@
 ---
-- name: install packages on laptop
+- name: "Git | Install package"
   tags: laptop
   ansible.builtin.apt:
     name: git
