@@ -8,7 +8,7 @@
 
 - name: "Git | Change remote origin"
   community.general.git_config:
-    repo: 'ansible.git'
+    repo: "{{ ansible_user_dir }}/.dotfiles/"
     scope: 'local'
     name: 'remote.origin.url'
     value: 'git@github.com:mpboden/ansible.git'
