@@ -1,0 +1,7 @@
+---
+- name: install packages on laptop
+  tags: laptop
+  ansible.builtin.apt:
+    name: nala
+    state: latest
+  become: true

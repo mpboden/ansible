@@ -12,8 +12,7 @@ git_user_email: !vault |
 
 core_roles:
   - bash
-  # - nala
-#  - git
+  - nala
   - neovim
   - ssh
   - tmux
