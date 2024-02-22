@@ -13,7 +13,7 @@ git_user_email: !vault |
 core_roles:
   - bash
   # - nala
-  - git
+#  - git
   - neovim
   - ssh
   - tmux
@@ -30,7 +30,7 @@ laptop_roles:
   # - putty
   # - gimp
   # - system
-  # - git
+  - git
   # - gparted
 
 home_roles:

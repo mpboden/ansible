@@ -11,23 +11,13 @@
         upgrade: 'yes'
       changed_when: false
 
-- hosts: all
+- hosts: laptop
   become: false
   tasks:
 
-    #    - name: Run Role
-    #      tags: always
-    #      include_role:
-    #        name: ssh
-    #    
-    #    - name: Run Role
-    #      tags: [ never, debug ]
-    #      include_role:
-    #        name: whoami
-    #
     - name: Set roles
       ansible.builtin.set_fact:
-        run_roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or core_roles | difference(exclude_roles | default([])) }}"
+        run_roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or core_roles + laptop_roles | default([]) | difference(exclude_roles | default([])) }}"
       tags:
         - always
 
