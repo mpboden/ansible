@@ -1,4 +1,8 @@
 ---
+- name: "Git | Print debut message"
+  debug:
+    msg: "This is a the git role"
+
 - name: "Git | Install package"
   tags: laptop
   ansible.builtin.apt:
