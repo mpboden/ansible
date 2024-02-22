@@ -124,4 +124,5 @@ alias less='less -R'
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
+alias vi='nvim'
 alias vim='nvim'
