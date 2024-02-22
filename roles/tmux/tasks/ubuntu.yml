@@ -10,14 +10,14 @@
     path: "{{ ansible_user_dir }}/.{{ conf_filename }}"
   register: stat_result
 
-- name: "tmux | Debug stat results"
-  debug:
-    msg: "{{ stat_result }}"
+#- name: "tmux | Debug stat results"
+#  debug:
+#    msg: "{{ stat_result }}"
 
-- name: "tmux | Debug path exists and not a symlink"
-  ansible.builtin.debug:
-    msg: "Path exists and isn't a symlink"
-  when: stat_result.stat.islnk is defined and stat_result.stat.islnk == False
+#- name: "tmux | Debug path exists and not a symlink"
+#  ansible.builtin.debug:
+#    msg: "Path exists and isn't a symlink"
+#  when: stat_result.stat.islnk is defined and stat_result.stat.islnk == False
 
 - name: "tmux | Copy old dotfile"
   ansible.builtin.copy:
