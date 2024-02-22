@@ -1,8 +1,4 @@
 ---
-- name: "Git | Print debut message"
-  debug:
-    msg: "This is a the git role"
-
 - name: "Git | Install package"
   tags: laptop
   ansible.builtin.apt:
@@ -11,7 +7,7 @@
   become: true
 
 - name: "Git | Change remote origin"
-  ansible.builtin.git:
+  community.general.git_config:
     repo: 'ansible.git'
     scope: 'local'
     name: 'remote.origin.url'
