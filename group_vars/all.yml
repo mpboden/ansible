@@ -3,6 +3,7 @@ user: mike
 core_roles:
   - bash
   # - nala
+  - git
   - neovim
   - ssh
   - tmux

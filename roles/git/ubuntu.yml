@@ -1,0 +1,14 @@
+---
+- name: install packages on laptop
+  tags: laptop
+  ansible.builtin.apt:
+    name: git
+    state: latest
+  become: true
+
+- name: "Git | Change remote origin"
+  ansible.builtin.git:
+    repo: 'ansible.git'
+    scope: 'local'
+    name: 'remote.origin.url'
+    value: 'git@github.com:mpboden/ansible.git'
