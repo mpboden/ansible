@@ -48,3 +48,11 @@
       with_items: "{{ run_roles }}"
       tags:
         - always
+
+    - name: Create symlink to dotfiles script"
+      ansible.builtin.file:
+          src: "{{ ansible_user_dir }}/.dotfiles/bin/dotfiles"
+          dest: "{{ ansible_user_dir }}/bin/dotfiles"
+          state: link
+          force: true
+
