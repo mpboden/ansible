@@ -1,0 +1,3 @@
+---
+- name: "gnome-settings | Load terminal settings"
+  ansible.builtin.shell: dconf load /org/gnome/terminal/ < {{ role_path }}/files/terminal-settings
