@@ -9,7 +9,7 @@
 - name: "Putty | Copy sessions"
   tags: laptop
   ansible.builtin.copy:
-    src: {{ item }}
+    src: "{{ item }}"
     dest: "{{ ansible_user_dir }}/.config/putty/sessions/"
   with_fileglob: "{{ role_path }}/files/sessions/*"
 
