@@ -23,37 +23,15 @@ fi
 
 # enable color support of ls and grep
 if [ ! -z ${COLOR_THEME=x} ]; then # if COLOR_THEME is set
-	if [ -L ~/.dircolors ]; then
-		unlink ~/.dircolors
-	fi
-
 	# setup colored list directory contents
 	if [ -x /usr/bin/dircolors ] || [ -x /usr/local/bin/gdircolors ]; then
 		
-		# create symlink to .dircolors based on theme
-		if [ "$COLOR_THEME" == "Solarized_Dark" ]; then
-			ln -s ~/dotfiles/dircolors.ansi-solarized_dark ~/.dircolors
-		elif [ "$COLOR_THEME" == "Solarized_Light" ]; then
-			ln -s ~/dotfiles/dircolors.ansi-solarized_light ~/.dircolors
-		fi
-	
 		# export LS_COLORS based on OS version
 		if [[ "$OSTYPE" == "freebsd"* ]]; then
 			test -r ~/.dircolors && eval "$(gdircolors -b ~/.dircolors)" || eval "$(gdircolors -b)"
 		elif [[ "$OSTYPE" == "linux-gnu" ]]; then
 			test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 		fi
-		# maybe add elif dircolors or gdircolors does not exist
-		# this will export LSCOLORS with Solarized Dark theme to work
-		#	with standard `ls` command and display colors for basic directories and files
-		#
-		#	dotdir=$HOME/dotfiles
-		#	file="lscolors"
-		#	
-		#	if [[ "$OSTYPE" == "freebsd"8 ]]; then
-		#		[ -r "$dotdir/$file ] && [ -f "$dotdir/$file" ] && source "$dotdir/$file";
-		#	fi
-		
 	fi
 
 	# Detect which `ls` flavor is in use
@@ -101,11 +79,6 @@ alias week='date +%V'
 
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
-
-# IP addresses
-#alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-#alias localip="ifconfig -a bond0"
-#alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
 # Canonical hex dump; some systems have this symlinked
 command -v hd > /dev/null || alias hd="hexdump -C"
