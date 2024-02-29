@@ -1,0 +1,8 @@
+---
+- name: "Putty | Install package"
+  tags: laptop
+  ansible.builtin.apt:
+    name: putty
+    state: latest
+  become: true
+

@@ -23,15 +23,15 @@ core_roles:
 
 laptop_roles:
   # - build-essential
-  # - keypassXC
-  # - remmina
-  # - virtualbox
-  # - putty
   # - gimp
-  # - system
   - git
-  # - gparted
   - gnome-settings
+  # - gparted
+  # - keypassXC
+  - putty
+  # - remmina
+  # - system
+  # - virtualbox
 
 home_roles:
   #  - samba
