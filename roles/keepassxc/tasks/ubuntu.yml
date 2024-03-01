@@ -8,6 +8,7 @@
 
 - name: "KeepassXC | Install rclone"
   ansible.builtin.shell: curl https://rclone.org/install.sh | sudo bash
+  ignore_errors: true
   become: true
 
 - name: "KeepassXC | Copy rclone coniguration"
