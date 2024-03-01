@@ -1,0 +1,31 @@
+---
+- name: "KeepassXC | Install package"
+  tags: laptop
+  ansible.builtin.apt:
+    name: keepassxc
+    state: latest
+  become: true
+
+- name: "KeepassXC | Install rclone"
+  ansible.builtin.shell: curl https://rclone.org/install.sh | sudo bash
+  become: true
+
+- name: "KeepassXC | Copy rclone coniguration"
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/rclone.conf"
+    dest: "{{ ansible_user_dir }}/.config/rclone/rclone.conf"
+  become: false
+
+- name: "KeepassXC | Create symlink for sync-passwords.sh"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/sync-passwords.sh"
+    dest: "{{ ansible_user_dir }}/bin/sync-passwords.sh"
+    state: link
+    force: true
+  become: false
+
+- name: "KeepassXC | Configure cronjob"
+  ansible.builtin.cron:
+    name: "sync passwords"
+    minute: "*/20"
+    job: "{{ ansible_user_dir }}/bin/sync-passwords.sh"
