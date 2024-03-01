@@ -1,0 +1,17 @@
+---
+- name: "Remmina | Install package"
+  tags: laptop
+  ansible.builtin.apt:
+    name: remmina
+    state: latest
+  become: true
+
+- name: "Remmina | Create symlinks for profiles"
+  tags: laptop
+  ansible.builtin.file:
+    src: "{{ item }}"
+    dest: "{{ ansible_user_dir }}/.local/share/remmina/{{ item | basename }}"
+    state: link
+    force: true
+  with_fileglob: "files/*"
+  become: false

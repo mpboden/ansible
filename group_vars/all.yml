@@ -29,7 +29,7 @@ laptop_roles:
   # - gparted
   # - keypassXC
   - putty
-  # - remmina
+  - remmina
   # - system
   # - virtualbox
 
