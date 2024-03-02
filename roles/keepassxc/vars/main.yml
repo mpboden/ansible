@@ -1,0 +1,13 @@
+# Name of your remote storage as defined in Rclone
+drive_name: "dropbox_remote"
+
+# Name and locations of the passwords file
+db_file_name: "BodenPasswordDatabase.kdbx"
+local_location: "{{ ansible_user_dir }}/Documents/KeePass"
+remote_location: "KeePass"
+
+# Full path to local and remote database files
+local_path: "{{ local_location }}/{{ db_file_name }}"
+remote_path: "{{ remote_location }}/{{ db_file_name }}"
+
+sync_script: "sync-passwords.sh"

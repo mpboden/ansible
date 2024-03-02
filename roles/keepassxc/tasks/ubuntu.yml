@@ -6,27 +6,24 @@
     state: latest
   become: true
 
-- name: "KeepassXC | Install rclone"
-  ansible.builtin.shell: curl https://rclone.org/install.sh | sudo bash
-  ignore_errors: true
-  become: true
-
 - name: "KeepassXC | Copy rclone coniguration"
   ansible.builtin.copy:
     src: "{{ role_path }}/files/rclone.conf"
     dest: "{{ ansible_user_dir }}/.config/rclone/rclone.conf"
   become: false
 
-- name: "KeepassXC | Create symlink for sync-passwords.sh"
+- name: "KeepassXC | Create symlink for {{ sync_script }}"
   ansible.builtin.file:
-    src: "{{ role_path }}/files/sync-passwords.sh"
-    dest: "{{ ansible_user_dir }}/bin/sync-passwords.sh"
+    src: "{{ role_path }}/files/{{ sync_script }}"
+    dest: "{{ ansible_user_dir }}/bin/{{ sync_script }}"
     state: link
     force: true
-  become: false
+
+- name: "KeepassXC | Download KeepassXC database"
+  ansible.builtin.shell: rclone copy {{ drive_name }}:{{ remote_path }} {{ local_location }}
 
 - name: "KeepassXC | Configure cronjob"
   ansible.builtin.cron:
     name: "sync passwords"
     minute: "*/20"
-    job: "{{ ansible_user_dir }}/bin/sync-passwords.sh"
+    job: "{{ ansible_user_dir }}/bin/{{ sync_script }}"
