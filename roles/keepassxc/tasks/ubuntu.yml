@@ -6,6 +6,11 @@
     state: latest
   become: true
 
+- name: "KeepassXC | Ensure {{ ansible_user_dir }}/.config/rclone directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/rclone"
+    state: directory
+
 - name: "KeepassXC | Copy rclone coniguration"
   ansible.builtin.copy:
     src: "{{ role_path }}/files/rclone.conf"
