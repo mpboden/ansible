@@ -22,7 +22,7 @@ core_roles:
   - fzf
 
 laptop_roles:
-  # - build-essential
+  - build-essential
   - gimp
   - git
   - gnome-settings
