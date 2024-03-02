@@ -26,11 +26,10 @@ laptop_roles:
   # - gimp
   - git
   - gnome-settings
-  # - gparted
+  - gparted
   - keepassxc
   - putty
   - remmina
-  # - system
   - virtualbox
 
 home_roles:

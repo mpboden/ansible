@@ -1,0 +1,7 @@
+---
+- name: "gparted | Install Package"
+  tags: laptop
+  ansible.builtin.apt:
+    name: gparted
+    state: latest
+  become: true
