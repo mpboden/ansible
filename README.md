@@ -6,13 +6,13 @@
     ```sh
     bash -c "$(curl -fsSl https://raw.githubusercontent.com/mpboden/ansible/master/bin/dotfiles)"
     ```
-
 - Subsequent runs
     A symlink to `~/.dotfiles/bin/dotfiles` is placed in `~/bin` and can be run
     without tags or with tags for specific roles. For example:
-      - dotfiles
-      - dotfiles -t ssh
-      - dotfiles -t "ssh,nvim"
+  
+        - `dotfiles`
+        - `dotfiles -t ssh`
+        - `dotfiles -t "ssh,nvim"`
 
 ## REQUIREMENTS
 
