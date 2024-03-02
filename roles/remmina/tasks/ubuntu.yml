@@ -6,7 +6,7 @@
     state: latest
   become: true
 
-- name: "Remmina | Ensure $HOME/.local/share/remmina directory exists"
+- name: "Remmina | Ensure {{ ansible_user_dir }}/.local/share/remmina directory exists"
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.local/share/remmina"
     state: directory

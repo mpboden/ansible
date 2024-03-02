@@ -1,5 +1,5 @@
 ---
-- name: "Ensure $HOME/.ssh directory exists"
+- name: "Ensure {{ ansible_user_dir }}/.ssh directory exists"
   ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.ssh"
     state: directory
