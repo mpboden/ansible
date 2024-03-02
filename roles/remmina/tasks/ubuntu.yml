@@ -6,6 +6,11 @@
     state: latest
   become: true
 
+- name: "Remmina | Ensure $HOME/.local/share/remmina directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/share/remmina"
+    state: directory
+
 - name: "Remmina | Create symlinks for profiles"
   tags: laptop
   ansible.builtin.file:
