@@ -1,8 +1,9 @@
 [/]
-favorite-apps=['firefox.desktop', 'thunderbird.desktop', 'putty.desktop', 'org.gnome.Terminal.desktop', 'org.remmina.Remmina.desktop', 'org.gnome.Nautilus.desktop', 'libreoffice-writer.desktop', 'org.gnome.gedit.desktop', 'snap-store_ubuntu-software.desktop', 'org.keepassxc.KeePassXC.desktop', 'gimp_gimp.desktop', 'virtualbox.desktop']
+favorite-apps=['firefox.desktop', 'thunderbird.desktop', 'putty.desktop', 'org.gnome.Terminal.desktop', 'org.remmina.Remmina.desktop', 'org.gnome.Nautilus.desktop', 'libreoffice-writer.desktop', 'org.gnome.gedit.desktop', 'snap-store_ubuntu-software.desktop', 'org.keepassxc.KeePassXC.desktop', 'gimp.desktop', 'virtualbox.desktop']
 had-bluetooth-devices-setup=true
 
 [extensions/dash-to-dock]
 click-action='minimize-or-previews'
 icon-size-fixed=false
 show-mounts=false
+show-trash=false
