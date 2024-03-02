@@ -23,7 +23,7 @@ core_roles:
 
 laptop_roles:
   # - build-essential
-  # - gimp
+  - gimp
   - git
   - gnome-settings
   - gparted

@@ -1,0 +1,6 @@
+---
+- name: "Gimp | Install Package"
+  ansible.builtin.apt:
+    name: gimp
+    state: latest
+  become: true
