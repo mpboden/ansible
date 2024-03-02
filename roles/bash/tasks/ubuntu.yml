@@ -64,6 +64,11 @@
     state: present
   become: true
 
+- name: "Bash | Ensure {{ ansible_user_dir }}/bin directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/bin"
+    state: directory
+    
 - name: "Bash | Copy 'now' script"
   ansible.builtin.copy:
     src: "{{ role_path}}/files/scripts/{{ now_script }}"
