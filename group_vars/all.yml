@@ -27,7 +27,7 @@ laptop_roles:
   - git
   - gnome-settings
   # - gparted
-  - keypassxc
+  - keepassxc
   - putty
   - remmina
   # - system
