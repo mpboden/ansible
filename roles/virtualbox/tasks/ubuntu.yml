@@ -1,0 +1,7 @@
+---
+- name: "VirtualBox | Install package"
+  tags: laptop
+  ansible.builtin.apt:
+    name: virtualbox
+    state: latest
+  become: true

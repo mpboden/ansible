@@ -31,7 +31,7 @@ laptop_roles:
   - putty
   - remmina
   # - system
-  # - virtualbox
+  - virtualbox
 
 home_roles:
   #  - samba
