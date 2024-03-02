@@ -18,7 +18,7 @@ core_roles:
   - tmux
   - tree
   # - lua
-  # - ethtool
+  - ethtool
   - fzf
 
 laptop_roles:
@@ -33,10 +33,14 @@ laptop_roles:
   - virtualbox
 
 home_roles:
+  #  - fail2ban
+  #  - fio
+  #  - iotop
   #  - samba
   - reboot
 
 sebastopol_roles:
+  # - fail2ban
   - reboot
 
 ansible_become_pass: !vault |
