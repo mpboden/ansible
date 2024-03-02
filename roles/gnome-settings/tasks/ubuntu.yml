@@ -1,3 +1,12 @@
 ---
+- name: "gnome-settings | Load nautilus settings"
+  ansible.builtin.shell: dconf load /org/gnome/nautilus/ < {{ role_path }}/files/nautilus
+
+- name: "gnome-settings | Load shell settings"
+  ansible.builtin.shell: dconf load /org/gnome/shell/ < {{ role_path }}/files/shell
+  
+- name: "gnome-settings | Load system settings"
+  ansible.builtin.shell: dconf load /org/gnome/system/ < {{ role_path }}/files/system
+
 - name: "gnome-settings | Load terminal settings"
-  ansible.builtin.shell: dconf load /org/gnome/terminal/ < {{ role_path }}/files/terminal-settings
+  ansible.builtin.shell: dconf load /org/gnome/terminal/ < {{ role_path }}/files/terminal

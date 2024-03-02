@@ -1,0 +1,15 @@
+[compression]
+default-compression-format='zip'
+
+[icon-view]
+default-zoom-level='larger'
+
+[preferences]
+default-folder-viewer='list-view'
+search-filter-time-type='last_modified'
+search-view='list-view'
+
+[window-state]
+initial-size=(1186, 934)
+maximized=false
+sidebar-width=321
