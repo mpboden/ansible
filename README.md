@@ -58,6 +58,7 @@ For passwordless login, there are two options:
 This project based from a project by TechDufus (https://github.com/TechDufus/dotfiles).
 
 Copyright 2022 TechDufus
+
 Copyright 2024 Mike Boden
 
    Licensed under the Apache License, Version 2.0 (the "License");
