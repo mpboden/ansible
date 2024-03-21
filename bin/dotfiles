@@ -125,7 +125,7 @@ function ubuntu_setup() {
 }
 
 function arch_setup() {
-    echo "arch setup"
+    _task "Arch setup..."
 }
 
 #function update_ansible_galaxy() {
