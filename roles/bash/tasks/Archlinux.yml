@@ -38,36 +38,37 @@
     force: true
   with_fileglob: "files/*"
 
-#- name: "Bash | Get old .dircolors stats"
-#  ansible.builtin.stat:
-#    path: "{{ ansible_user_dir }}/.dircolors"
-#  register: stat_dircolor
-#
-#- name: "Bash | Copy old .dircolors"
-#  ansible.builtin.copy:
-#    src: "{{ ansible_user_dir }}/.dircolors"
-#    dest: "{{ backup_dir }}"
-#  when: stat_dircolor.stat.islnk is defined and stat_dircolor.stat.islnk == False and first_run.stat.islnk is not defined
-#
-#- name: "Bash | Create symlink for .dircolors"
-#  ansible.builtin.file:
-#    src: "{{ role_path }}/files/solarized/dircolors.ansi-solarized_dark"
-#    dest: "{{ ansible_user_dir }}/.dircolors"
-#    state: link
-#    force: true
-#
-#- name: "Bash | Dependencies for 'now' script"
-#  ansible.builtin.apt:
-#    name:
-#      - ncal
-#      - toilet
-#    state: present
-#  become: true
-#
+- name: "Bash | Get old .dircolors stats"
+  ansible.builtin.stat:
+    path: "{{ ansible_user_dir }}/.dircolors"
+  register: stat_dircolor
+
+- name: "Bash | Copy old .dircolors"
+  ansible.builtin.copy:
+    src: "{{ ansible_user_dir }}/.dircolors"
+    dest: "{{ backup_dir }}"
+  when: stat_dircolor.stat.islnk is defined and stat_dircolor.stat.islnk == False and first_run.stat.islnk is not defined
+
+- name: "Bash | Create symlink for .dircolors"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/solarized/dircolors.ansi-solarized_dark"
+    dest: "{{ ansible_user_dir }}/.dircolors"
+    state: link
+    force: true
+
+- name: "Bash | Dependencies for 'now' script"
+  ansible.builtin.pacman:
+    name:
+      #     - ncal
+      - toilet
+    state: present
+  become: true
+
 #- name: "Bash | Ensure {{ ansible_user_dir }}/bin directory exists"
 #  ansible.builtin.file:
 #    path: "{{ ansible_user_dir }}/bin"
 #    state: directory
+#    become: false
 #    
 #- name: "Bash | Copy 'now' script"
 #  ansible.builtin.copy:
