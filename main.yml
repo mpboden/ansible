@@ -19,12 +19,12 @@
       debug:
         msg: "{{ ansible_distribution }}"
 
-    #    - name: Set roles
-    #      ansible.builtin.set_fact:
-    #        run_roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or core_roles + laptop_roles | default([]) | difference(exclude_roles | default([])) }}"
-    #      tags:
-    #        - always
-    #
+    - name: Set roles
+      ansible.builtin.set_fact:
+        run_roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or core_roles + laptop_roles | default([]) | difference(exclude_roles | default([])) }}"
+      tags:
+        - always
+
     #    - name: Run roles
     #      ansible.builtin.include_role:
     #        apply:
@@ -43,4 +43,4 @@
     #          dest: "{{ ansible_user_dir }}/bin/dotfiles"
     #          state: link
     #          force: true
-    #
+
