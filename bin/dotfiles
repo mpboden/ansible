@@ -145,10 +145,10 @@ function arch_setup() {
         _cmd "sudo pacman -S --noconfirm python-watchdog"
     fi
 
-    if ! pacman -Q openssh >/dev/null 2>&1; then
-        _task "Installing OpenSSH"
-        _cmd "sudo pacman -S --noconfirm openssh"
-    fi
+#    if ! pacman -Q openssh >/dev/null 2>&1; then
+#        _task "Installing OpenSSH"
+#        _cmd "sudo pacman -S --noconfirm openssh"
+#    fi
 
     if ! pacman -Q git >/dev/null 2>&1; then
         _task "Installing git"
@@ -194,7 +194,6 @@ else
     _task "Updating repository"
         _cmd "git -C $DOTFILES_DIR pull --quiet"
 fi
-exit
 
 pushd "$DOTFILES_DIR" 2>&1 > /dev/null
 update_ansible_galaxy $ID

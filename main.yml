@@ -1,15 +1,15 @@
 ---
-- hosts: all 
-  become: false
-  pre_tasks:
-
-    - name: install updates
-      become: true
-      tags: always
-      ansible.builtin.apt:
-        update_cache: yes
-        upgrade: 'yes'
-      changed_when: false
+#- hosts: all 
+#  become: false
+#  pre_tasks:
+#
+#    - name: install updates
+#      become: true
+#      tags: always
+#      ansible.builtin.apt:
+#        update_cache: yes
+#        upgrade: 'yes'
+#      changed_when: false
 
 - hosts: laptop
   become: false
