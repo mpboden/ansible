@@ -20,7 +20,7 @@ core_roles:
   #  - ethtool
   #  - fzf
 
-laptop_roles:
+#laptop_roles:
   #  - build-essential
   #  - gimp
   #  - git
