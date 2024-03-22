@@ -12,25 +12,25 @@ git_user_email: !vault |
 
 core_roles:
   - bash
-  - neovim
-  - ssh
-  - tmux
-  - tree
-  # - lua
-  - ethtool
-  - fzf
+  #  - neovim
+  #  - ssh
+  #  - tmux
+  #  - tree
+  #  # - lua
+  #  - ethtool
+  #  - fzf
 
 laptop_roles:
-  - build-essential
-  - gimp
-  - git
-  - gnome-settings
-  - gparted
-  - keepassxc
-  - nala
-  - putty
-  - remmina
-  - virtualbox
+  #  - build-essential
+  #  - gimp
+  #  - git
+  #  - gnome-settings
+  #  - gparted
+  #  - keepassxc
+  #  - nala
+  #  - putty
+  #  - remmina
+  #  - virtualbox
 
 arch_roles:
 #  - base-devel
