@@ -64,25 +64,25 @@
     state: present
   become: true
 
-#- name: "Bash | Ensure {{ ansible_user_dir }}/bin directory exists"
+- name: "Bash | Ensure {{ ansible_user_dir }}/bin directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/bin"
+    state: directory
+    become: false
+    
+- name: "Bash | Copy 'now' script"
+  ansible.builtin.copy:
+    src: "{{ role_path}}/files/scripts/{{ now_script }}"
+    #    dest: "{{ role_path}}/files/scripts/{{ now_script }}"
+    dest: "{{ ansible_user_dir }}/bin/{{ now_script }}"
+    mode: '0700'
+  become: false
+    
+#- name: "Bash | Create symlink for 'now' script"
 #  ansible.builtin.file:
-#    path: "{{ ansible_user_dir }}/bin"
-#    state: directory
-#    become: false
-#    
-#- name: "Bash | Copy 'now' script"
-#  ansible.builtin.copy:
 #    src: "{{ role_path}}/files/scripts/{{ now_script }}"
-#    #    dest: "{{ role_path}}/files/scripts/{{ now_script }}"
 #    dest: "{{ ansible_user_dir }}/bin/{{ now_script }}"
-#    mode: '0700'
-#  become: false
-#    
-##- name: "Bash | Create symlink for 'now' script"
-##  ansible.builtin.file:
-##    src: "{{ role_path}}/files/scripts/{{ now_script }}"
-##    dest: "{{ ansible_user_dir }}/bin/{{ now_script }}"
-##    state: link
-##    force: true
-#
-#
+#    state: link
+#    force: true
+
+
