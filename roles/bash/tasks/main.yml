@@ -1,9 +1,7 @@
 ---
-- name: Run Ubuntu Tasks
-  ansible.builtin.import_tasks: ubuntu.yml
-  when: ansible_os_family == 'Debian'
+#- name: Run Ubuntu Tasks
+#  ansible.builtin.import_tasks: ubuntu.yml
+#  when: ansible_os_family == 'Debian'
 
-- name: OS version
-  debug:
-    msg: "{{ ansible_distribution }}"
-  
+- name: "Bash | Run Tasks"
+  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"

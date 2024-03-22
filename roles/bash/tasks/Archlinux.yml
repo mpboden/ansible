@@ -1,0 +1,87 @@
+---
+- name: "Bash | Check if first run"
+  stat:
+    path: "{{ first_run }}"
+  register: first_run
+
+- name: "Bash | Create backup directory"
+  ansible.builtin.file:
+   path: "{{ backup_dir }}"
+   state: directory
+   mode: '0755'
+  when: first_run.stat.islnk is not defined 
+
+#- name: "Bash | Get stats on old dotfiles"
+#  ansible.builtin.stat:
+#    path: "{{ ansible_user_dir }}/{{ item }}"
+#  with_items: "{{ old_dotfiles }}"
+#  register: stat_results
+#
+##- name: "Bash | Debug stat results"
+##  debug:
+##    msg: "{{ stat_results }}"
+#
+#- name: "Bash | Copy old dotfiles"
+#  ansible.builtin.copy:
+#    src: "{{ item.stat.path }}"
+#    dest: "{{ backup_dir }}"
+#  loop: "{{ stat_results.results }}"
+#  when: item.stat.exists == True and first_run.stat.islnk is not defined
+#  loop_control:
+#    label: "{{ item.item }}"
+#
+#- name: "Bash | Create symlinks"
+#  ansible.builtin.file:
+#    src: "{{ item }}"
+#    dest: "{{ ansible_user_dir }}/.{{ item | basename }}"
+#    state: link
+#    force: true
+#  with_fileglob: "files/*"
+#
+#- name: "Bash | Get old .dircolors stats"
+#  ansible.builtin.stat:
+#    path: "{{ ansible_user_dir }}/.dircolors"
+#  register: stat_dircolor
+#
+#- name: "Bash | Copy old .dircolors"
+#  ansible.builtin.copy:
+#    src: "{{ ansible_user_dir }}/.dircolors"
+#    dest: "{{ backup_dir }}"
+#  when: stat_dircolor.stat.islnk is defined and stat_dircolor.stat.islnk == False and first_run.stat.islnk is not defined
+#
+#- name: "Bash | Create symlink for .dircolors"
+#  ansible.builtin.file:
+#    src: "{{ role_path }}/files/solarized/dircolors.ansi-solarized_dark"
+#    dest: "{{ ansible_user_dir }}/.dircolors"
+#    state: link
+#    force: true
+#
+#- name: "Bash | Dependencies for 'now' script"
+#  ansible.builtin.apt:
+#    name:
+#      - ncal
+#      - toilet
+#    state: present
+#  become: true
+#
+#- name: "Bash | Ensure {{ ansible_user_dir }}/bin directory exists"
+#  ansible.builtin.file:
+#    path: "{{ ansible_user_dir }}/bin"
+#    state: directory
+#    
+#- name: "Bash | Copy 'now' script"
+#  ansible.builtin.copy:
+#    src: "{{ role_path}}/files/scripts/{{ now_script }}"
+#    #    dest: "{{ role_path}}/files/scripts/{{ now_script }}"
+#    dest: "{{ ansible_user_dir }}/bin/{{ now_script }}"
+#    mode: '0700'
+#  become: false
+#    
+##- name: "Bash | Create symlink for 'now' script"
+##  ansible.builtin.file:
+##    src: "{{ role_path}}/files/scripts/{{ now_script }}"
+##    dest: "{{ ansible_user_dir }}/bin/{{ now_script }}"
+##    state: link
+##    force: true
+#
+#
