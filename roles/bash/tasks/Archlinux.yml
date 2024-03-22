@@ -30,14 +30,14 @@
   loop_control:
     label: "{{ item.item }}"
 
-#- name: "Bash | Create symlinks"
-#  ansible.builtin.file:
-#    src: "{{ item }}"
-#    dest: "{{ ansible_user_dir }}/.{{ item | basename }}"
-#    state: link
-#    force: true
-#  with_fileglob: "files/*"
-#
+- name: "Bash | Create symlinks"
+  ansible.builtin.file:
+    src: "{{ item }}"
+    dest: "{{ ansible_user_dir }}/.{{ item | basename }}"
+    state: link
+    force: true
+  with_fileglob: "files/*"
+
 #- name: "Bash | Get old .dircolors stats"
 #  ansible.builtin.stat:
 #    path: "{{ ansible_user_dir }}/.dircolors"
