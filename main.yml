@@ -34,6 +34,11 @@
       tags:
         - always
 
+    - name: "Ensure {{ ansible_user_dir }}/bin directory exists"
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/bin"
+        state: directory
+
     - name: Create symlink to dotfiles script"
       ansible.builtin.file:
           src: "{{ ansible_user_dir }}/.dotfiles/bin/dotfiles"
