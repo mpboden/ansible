@@ -11,16 +11,16 @@
    mode: '0755'
   when: first_run.stat.islnk is not defined 
 
-#- name: "Bash | Get stats on old dotfiles"
-#  ansible.builtin.stat:
-#    path: "{{ ansible_user_dir }}/{{ item }}"
-#  with_items: "{{ old_dotfiles }}"
-#  register: stat_results
-#
-##- name: "Bash | Debug stat results"
-##  debug:
-##    msg: "{{ stat_results }}"
-#
+- name: "Bash | Get stats on old dotfiles"
+  ansible.builtin.stat:
+    path: "{{ ansible_user_dir }}/{{ item }}"
+  with_items: "{{ old_dotfiles }}"
+  register: stat_results
+
+- name: "Bash | Debug stat results"
+  debug:
+    msg: "{{ stat_results }}"
+
 #- name: "Bash | Copy old dotfiles"
 #  ansible.builtin.copy:
 #    src: "{{ item.stat.path }}"
