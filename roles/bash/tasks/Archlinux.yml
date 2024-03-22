@@ -64,16 +64,16 @@
     state: present
   become: true
 
-#- name: "Bash | Ensure {{ ansible_user_dir }}/bin directory exists"
-#  ansible.builtin.file:
-#    path: "{{ ansible_user_dir }}/bin"
-#    state: directory
-#    become: false
-
-- name: "Ensure {{ ansible_user_dir }}/bin directory exists"
+- name: "Bash | Ensure {{ ansible_user_dir }}/bin directory exists"
   ansible.builtin.file:
-   path: "{{ ansible_user_dir }}/bin"
-   state: directory
+    path: "{{ ansible_user_dir }}/bin"
+    state: directory
+  become: false
+
+#- name: "Ensure {{ ansible_user_dir }}/bin directory exists"
+#  ansible.builtin.file:
+#   path: "{{ ansible_user_dir }}/bin"
+#   state: directory
    
 #- name: "Bash | Copy 'now' script"
 #  ansible.builtin.copy:
