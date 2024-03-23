@@ -10,7 +10,7 @@
   become: true
 
 - name: "Neovim | Install Package"
-  ansible.builtinpacman:
+  ansible.builtin.pacman:
     name:
       - neovim
     state: present
