@@ -12,7 +12,7 @@ git_user_email: !vault |
 
 core_roles:
   - bash
-  #  - neovim
+  - neovim
   #  - ssh
   #  - tmux
   #  - tree
