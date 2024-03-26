@@ -1,0 +1,33 @@
+---
+- name: "tmux | Install pacakge"
+  ansible.builtin.pacman:
+    name: tmux 
+    state: latest
+  become: true
+
+- name: "tmux | Get stats on existing .{{ conf_filename }}"
+  ansible.builtin.stat:
+    path: "{{ ansible_user_dir }}/.{{ conf_filename }}"
+  register: stat_result
+
+#- name: "tmux | Debug stat results"
+#  debug:
+#    msg: "{{ stat_result }}"
+
+#- name: "tmux | Debug path exists and not a symlink"
+#  ansible.builtin.debug:
+#    msg: "Path exists and isn't a symlink"
+#  when: stat_result.stat.islnk is defined and stat_result.stat.islnk == False
+
+- name: "tmux | Copy old dotfile"
+  ansible.builtin.copy:
+    src: "{{ ansible_user_dir }}/.{{ conf_filename }}"
+    dest: "{{ backup_dir }}"
+  when: stat_result.stat.islnk is defined and stat_result.stat.islnk == False and first_run.stat.islnk is not defined
+
+- name: "tmux | Create symlink"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/{{ conf_filename }}"
+    dest: "{{ ansible_user_dir }}/.{{ conf_filename }}"
+    state: link
+    force: true
