@@ -33,13 +33,14 @@ core_roles:
   #  - virtualbox
 
 arch_roles:
-#  - base-devel
-#  - suckless
-#  - firefox
-#  - thunderbird
-#  - gimp
-#  - libre-office
-#  - htop
+  #  - base-devel
+  #  - suckless
+  #  - firefox
+  - git
+  #  - gimp
+  #  - libre-office
+  #  - htop
+  #  - thunderbird
 
 home_roles:
   #  - fail2ban

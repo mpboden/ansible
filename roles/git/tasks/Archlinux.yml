@@ -1,0 +1,34 @@
+---
+- name: "Git | Install package"
+  tags: arch
+  ansible.builtin.pacman:
+    name: git
+    state: latest
+  become: true
+
+- name: "Git | Set user.email"
+  community.general.git_config:
+    name: user.email
+    scope: global
+    value: "{{ git_user_email }}"
+  no_log: true
+  become: false
+
+- name: "Git | Set editor"
+  community.general.git_config:
+    name: core.editor
+    scope: global
+    value: "nvim"
+
+- name: "Git | Set user.name"
+  community.general.git_config:
+    name: user.name
+    scope: global
+    value: "{{ git_user_name }}"
+
+- name: "Git | Change remote origin"
+  community.general.git_config:
+    repo: "{{ ansible_user_dir }}/.dotfiles/"
+    scope: 'local'
+    name: 'remote.origin.url'
+    value: 'git@github.com:mpboden/ansible.git'
