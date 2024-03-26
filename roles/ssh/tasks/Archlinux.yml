@@ -28,3 +28,11 @@
   loop_control:
     loop_var: ssh_key_item
   with_items: "{{ ssh_key | default({}) | dict2items }}"
+
+- name: "SSH | Enable ssh-agent systemd service"
+  ansible.builtin.systemd_service:
+    name: ssh-agent
+    scope: user
+    enabled: true
+    state: started
+    masked: no
