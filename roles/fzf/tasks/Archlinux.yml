@@ -1,0 +1,7 @@
+---
+- name: "fzf | Install package"
+  tags: arch
+  ansible.builtin.pacman:
+    name: fzf
+    state: latest
+  become: true
