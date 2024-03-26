@@ -1,0 +1,6 @@
+---
+- name: "Ethtool | Install Package"
+  ansible.builtin.pacman:
+    name: ethtool
+    state: latest
+  become: true

@@ -17,7 +17,7 @@ core_roles:
   - tmux
   - tree
   #  # - lua
-  #  - ethtool
+  - ethtool
   #  - fzf
 
 #laptop_roles:
