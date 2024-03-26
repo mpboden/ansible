@@ -1,0 +1,6 @@
+---
+- name: "tree | Install pacakge"
+  ansible.builtin.pacman:
+    name: tree 
+    state: latest
+  become: true
