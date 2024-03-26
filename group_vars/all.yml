@@ -39,7 +39,7 @@ arch_roles:
   - git
   #  - gimp
   #  - libre-office
-  #  - htop
+  - htop
   #  - thunderbird
 
 home_roles:

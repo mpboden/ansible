@@ -1,0 +1,14 @@
+---
+- name: "htop | Install package"
+  tags: arch
+  ansible.builtin.pacman:
+    name: htop
+    state: latest
+  become: true
+
+- name: "htop | Create symlink for configuration file"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/htoprc"
+    dest: "{{ ansible_user_dir }}/.config/htop/htoprc"
+    state: link
+    force: true
