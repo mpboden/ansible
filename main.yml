@@ -15,14 +15,14 @@
   become: false
   tasks:
 
-    - name: Set roles
+    - name: Set roles for Ubuntu Installation
       ansible.builtin.set_fact:
         run_roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or core_roles + laptop_roles | default([]) | difference(exclude_roles | default([])) }}"
       tags:
         - always
       when: ansible_facts['distribution'] == "Ubuntu"
 
-    - name: Set roles
+    - name: Set roles for Arch Linux Installation
       ansible.builtin.set_fact:
         run_roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or core_roles + arch_roles | default([]) | difference(exclude_roles | default([])) }}"
       tags:
