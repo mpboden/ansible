@@ -29,4 +29,10 @@ for option in autocd globstar;
 	done;
 now
 
+ssh-add -l &>/dev/null
+ID_GITHUB="$HOME/.ssh/id_github_mike"
+if [ "$?" -lt 2 ] && [ -f "$ID_GITHUB" ]; then
+    ssh-add -q $ID_GITHUB
+fi
+
 source /usr/share/doc/fzf/examples/key-bindings.bash
