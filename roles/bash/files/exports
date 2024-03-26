@@ -42,3 +42,10 @@ export MANPAGER='less -X';
 
 # Hide the “default interactive shell is now zsh” warning on macOS.
 #export BASH_SILENCE_DEPRECATION_WARNING=1;
+
+# In Arch Linux, I'm starting ssh-agent as a systemd service, so SSH_AUTH_SOCK
+# needs to be defined as follows
+OS=$(cat /etc/os-release | grep NAME | head -n 1 | awk -F\" '{print $2}')
+if [[ "$OS" == "Arch"* ]]; then
+    export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
+fi
