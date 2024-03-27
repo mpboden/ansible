@@ -1,0 +1,4 @@
+---
+wallpaper_script: "wallpaper.sh"
+suckless_dir: "{{ ansible_user_dir }}/.suckless"
+first_run: "{{ ansible_user_dir }}/.dotfiles_run"

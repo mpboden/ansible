@@ -33,6 +33,7 @@ laptop_roles:
   - virtualbox
 
 arch_roles:
+  - x
   #  - base-devel
   #  - suckless
   #  - firefox

@@ -1,0 +1,157 @@
+---
+- name: "X | Install Base X11 Packages & Libraries"
+  ansible.builtin.pacman:
+    name:
+      - xorg-server
+      - xorg-xinit
+      - libx11
+      - libxft
+      - libxinerama
+    state: latest
+  become: true
+
+- name: "X | Create symlink to .xinitrc"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/xinitrc"
+    dest: "{{ ansible_user_dir }}/.xinitrc"
+    state: link
+    force: true
+  become: false
+
+- name: "X | Install Dependencies for Suckless Apps"
+  ansible.builtin.pacman:
+    name:
+      - feh
+      - xcompmgr
+    state: latest
+  become: true
+
+- name: "X | Ensure {{ ansible_user_dir }}/scripts directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/scripts"
+    state: directory
+  become: false
+
+- name: "X | Create symlink to 'wallpaper.sh' script"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/scripts/{{ wallpaper_script }}"
+    dest: "{{ ansible_user_dir }}/scripts/{{ wallpaper_script }}"
+    state: link
+    force: true
+
+- name: "X | Ensure 'wallpaper.sh' script is executable"
+  ansible.builtin.file:
+    path: "{{ role_path }}/files/scripts/{{ wallpaper_script }}"
+    mode: '0700'
+  
+- name: "X | Ensure {{ suckless_dir }} directory exists"
+  ansible.builtin.file:
+    path: "{{ suckless_dir }}"
+    state: directory
+
+###########
+# dwm 
+###########
+- name: "X | Clone dwm repo"
+  ansible.builtin.git:
+    repo: https://github.com/mpboden/dwm.git
+    dest: "{{ suckless_dir }}/dwm"
+    single_branch: yes
+    version: my_dwm
+
+- name: "X | Build dwm"
+  community.general.make:
+    chdir: "{{ suckless_dir }}/dwm"
+
+- name: "X | Install dwm"
+  community.general.make:
+    chdir: "{{ suckless_dir }}/dwm"
+    target: install
+  become: true
+
+###########
+# st
+###########
+- name: "X | Clone st repo"
+  ansible.builtin.git:
+    repo: https://github.com/mpboden/st.git
+    dest: "{{ suckless_dir }}/st"
+    single_branch: yes
+    version: my_st
+  become: false
+
+- name: "X | Build st"
+  community.general.make:
+    chdir: "{{ suckless_dir }}/st"
+
+- name: "X | Install st"
+  community.general.make:
+    chdir: "{{ suckless_dir }}/st"
+    target: install
+  become: true
+
+
+###########
+# slstatus
+###########
+- name: "X | Clone slstatus repo"
+  ansible.builtin.git:
+    repo: https://github.com/mpboden/slstatus.git
+    dest: "{{ suckless_dir }}/slstatus"
+    single_branch: yes
+    version: my_slstatus
+  become: false
+
+- name: "X | Build slstatus"
+  community.general.make:
+    chdir: "{{ suckless_dir }}/slstatus"
+
+- name: "X | Install slstatus"
+  community.general.make:
+    chdir: "{{ suckless_dir }}/slstatus"
+    target: install
+  become: true
+
+
+###########
+# scroll
+###########
+- name: "X | Clone scroll repo"
+  ansible.builtin.git:
+    repo: https://github.com/mpboden/scroll.git
+    dest: "{{ suckless_dir }}/scroll"
+    single_branch: yes
+    version: my_scroll
+  become: false
+
+#- name: "X | Make and Install scroll"
+- name: "X | Build scroll"
+  community.general.make:
+    chdir: "{{ suckless_dir }}/scroll"
+
+- name: "X | Install scroll"
+  community.general.make:
+    chdir: "{{ suckless_dir }}/scroll"
+    target: install
+  become: true
+
+######################
+# Install Roboto Font
+######################
+- name: "X | Check if {{ ansible_user_dir }}/.local/share/fonts/Roboto Directory Exists" 
+  stat:
+    path: "{{ ansible_user_dir }}/.local/share/fonts/Roboto"
+  register: font_dir
+
+- name: "X | Create {{ ansible_user_dir }}/.local/share/fonts/Roboto Directory"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/share/fonts/Roboto"
+    state: directory
+  when: not font_dir.stat.exists
+
+- name: "X | Unzip Roboto Font to {{ ansible_user_dir }}/.local/share/fonts/Roboto"
+  ansible.builtin.unarchive:
+    src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/RobotoMono.zip
+    dest: "{{ ansible_user_dir }}/.local/share/fonts/Roboto"
+    remote_src: yes
+  when: not font_dir.stat.exists
