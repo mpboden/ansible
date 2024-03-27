@@ -1,4 +1,4 @@
-xcompmgr &              # compositor for transparency
-slstatus &              # status bar
-~/scripts/wallpaper.sh  # set wallpaper
+xcompmgr &          # compositor for transparency
+slstatus &          # status bar
+~/bin/wallpaper.sh  # set wallpaper
 exec dwm

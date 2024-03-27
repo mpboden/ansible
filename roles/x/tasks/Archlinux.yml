@@ -26,16 +26,16 @@
     state: latest
   become: true
 
-- name: "X | Ensure {{ ansible_user_dir }}/scripts directory exists"
+- name: "X | Ensure {{ ansible_user_dir }}/bin directory exists"
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/scripts"
+    path: "{{ ansible_user_dir }}/bin"
     state: directory
   become: false
 
 - name: "X | Create symlink to 'wallpaper.sh' script"
   ansible.builtin.file:
     src: "{{ role_path }}/files/scripts/{{ wallpaper_script }}"
-    dest: "{{ ansible_user_dir }}/scripts/{{ wallpaper_script }}"
+    dest: "{{ ansible_user_dir }}/bin/{{ wallpaper_script }}"
     state: link
     force: true
 
