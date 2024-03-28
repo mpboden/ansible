@@ -90,7 +90,6 @@
     target: install
   become: true
 
-
 ###########
 # slstatus
 ###########
@@ -112,7 +111,6 @@
     target: install
   become: true
 
-
 ###########
 # scroll
 ###########
@@ -124,7 +122,6 @@
     version: my_scroll
   become: false
 
-#- name: "X | Make and Install scroll"
 - name: "X | Build scroll"
   community.general.make:
     chdir: "{{ suckless_dir }}/scroll"
@@ -132,6 +129,27 @@
 - name: "X | Install scroll"
   community.general.make:
     chdir: "{{ suckless_dir }}/scroll"
+    target: install
+  become: true
+
+###########
+# dmenu
+###########
+- name: "X | Clone dmenu repo"
+  ansible.builtin.git:
+    repo: https://github.com/mpboden/dmenu.git
+    dest: "{{ suckless_dir }}/dmenu"
+    single_branch: yes
+    version: my_dmenu
+  become: false
+
+- name: "X | Build dmenu"
+  community.general.make:
+    chdir: "{{ suckless_dir }}/dmenu"
+
+- name: "X | Install dmenu"
+  community.general.make:
+    chdir: "{{ suckless_dir }}/dmenu"
     target: install
   become: true
 
