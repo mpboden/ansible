@@ -1,0 +1,7 @@
+---
+- name: "Gimp | Install package"
+  tags: arch
+  ansible.builtin.pacman:
+    name: gimp
+    state: latest
+  become: true

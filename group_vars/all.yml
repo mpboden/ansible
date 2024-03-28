@@ -38,7 +38,7 @@ arch_roles:
   #  - suckless
   - firefox
   - git
-  #  - gimp
+  - gimp
   #  - libre-office
   - htop
   #  - thunderbird
