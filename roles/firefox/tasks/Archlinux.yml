@@ -1,0 +1,7 @@
+---
+- name: "Firefox | Install package"
+  tags: arch
+  ansible.builtin.pacman:
+    name: firefox
+    state: latest
+  become: true

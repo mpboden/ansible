@@ -36,7 +36,7 @@ arch_roles:
   - x
   #  - base-devel
   #  - suckless
-  #  - firefox
+  - firefox
   - git
   #  - gimp
   #  - libre-office
