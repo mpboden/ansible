@@ -1,0 +1,7 @@
+---
+- name: "lf | Install package"
+  tags: arch
+  ansible.builtin.pacman:
+    name: lf
+    state: latest
+  become: true

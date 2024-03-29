@@ -1,0 +1,3 @@
+---
+- name: "lf | Run Tasks"
+  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
