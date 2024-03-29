@@ -35,4 +35,12 @@ if [ "$?" -lt 2 ] && [ -f "$ID_GITHUB" ]; then
     ssh-add -q $ID_GITHUB
 fi
 
-source /usr/share/doc/fzf/examples/key-bindings.bash
+OS=$(cat /etc/os-release | grep NAME | head -n 1 | awk -F\" '{print $2}')
+
+if [[ "$OS" == "Arch"* ]]; then
+    source /usr/share/fzf/key-bindings.bash
+    source /usr/share/fzf/completion.bash
+else
+    source /usr/share/doc/fzf/examples/key-bindings.bash
+    source /usr/share/doc/fzf/examples/completion.bash
+fi
