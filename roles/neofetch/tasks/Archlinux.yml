@@ -1,0 +1,7 @@
+---
+- name: "Neofetch | Install package"
+  tags: arch
+  ansible.builtin.pacman:
+    name: neofetch
+    state: latest
+  become: true
