@@ -43,7 +43,7 @@ arch_roles:
   - htop
   - lf
   - neofetch
-  #  - thunderbird
+  - thunderbird
 
 home_roles:
   #  - fail2ban

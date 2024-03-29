@@ -1,0 +1,6 @@
+---
+- name: "Thunderbird | Install pacakge"
+  ansible.builtin.pacman:
+    name: thunderbird
+    state: latest
+  become: true
