@@ -5,3 +5,4 @@
     name: nala
     state: latest
   become: true
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version != '20.04'
