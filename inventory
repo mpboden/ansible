@@ -1,2 +1,5 @@
 [laptop]
 localhost ansible_connection=local
+
+[servers]
+gamekeeper ansible_host="{{ gamekeeper_ip }}" ansible_port="{{ gamekeeper_port }}"
