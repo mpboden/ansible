@@ -2,7 +2,6 @@
 - name: "Neovim | Dependencies"
   ansible.builtin.apt:
     name:
-      - npm
       - cmake
       - curl
       - pkg-config
@@ -24,7 +23,7 @@
     state: directory
     mode: '0755'
     
-- name: "Neovim | Unarchive a file that needs to be downloaded (added in 2.0)"
+- name: "Neovim | Download latest stable version"
   ansible.builtin.unarchive:
     src: https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
     dest: "{{ ansible_user_dir }}/bin"
