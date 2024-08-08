@@ -56,20 +56,13 @@
     state: link
     force: true
 
-- name: "Bash | Dependencies for 'now' script : toilet"
-  ansible.builtin.apt:
-    name:
-      - toilet
-    state: present
-  become: true
-
-- name: "Bash | Dependencies for 'now' script : ncal"
+- name: "Bash | Dependencies for 'now' script"
   ansible.builtin.apt:
     name:
       - ncal
+      - toilet
     state: present
   become: true
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version != '20.04'
 
 - name: "Bash | Ensure {{ ansible_user_dir }}/bin directory exists"
   ansible.builtin.file:
