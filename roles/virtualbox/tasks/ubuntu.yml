@@ -1,7 +1,17 @@
 ---
-- name: "VirtualBox | Install package"
-  tags: laptop
-  ansible.builtin.apt:
-    name: virtualbox
-    state: latest
-  become: true
+- import_tasks: get-virtualbox-version-and-set-facts.yml
+
+- import_tasks: add-repo-virtualbox.yml
+
+- import_tasks: install-virtualbox.yml
+
+- import_tasks: download-extensionpack.yml
+
+- import_tasks: install-extensionpack.yml
+
+#- name: "VirtualBox | Install package"
+#  tags: laptop
+#  ansible.builtin.apt:
+#    name: virtualbox
+#    state: latest
+#  become: true

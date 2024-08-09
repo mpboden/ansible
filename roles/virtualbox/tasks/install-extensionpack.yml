@@ -1,0 +1,13 @@
+---
+- name: Install\Update VirtualBox Extension Pack 4 Linux
+  when:
+    - ansible_system == 'Linux'
+    - virtualbox_installed_extpack_info_fact['Extension Packs'] == 0
+      or
+      virtualbox_full_installed_extpack_version_fact != virtualbox_full_available_extpack_version_fact
+  become: yes
+  block:
+    - shell: yes | VBoxManage extpack install --replace /tmp/{{ virtualbox_available_extpack_filename_fact }}
+    - file:
+        path: '/tmp/{{ virtualbox_available_extpack_filename_fact }}'
+        state: absent

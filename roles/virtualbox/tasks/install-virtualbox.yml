@@ -1,0 +1,12 @@
+---
+- name: Install VirtualBox 4 Debian\Ubuntu
+  when:
+    - ansible_os_family == 'Debian'
+    # - ansible_pkg_mgr == 'apt'
+    # - ansible_architecture == 'x86_64'
+  become: yes
+  package:
+    name: virtualbox-{{ virtualbox_available_major_and_minor_version_fact }}
+    state: present
+  notify:
+    - run-vboxconfig
