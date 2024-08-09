@@ -16,7 +16,6 @@ return {
 
         local on_attach = function(client, bufnr)
             opts.buffer = bufnr
-
             -- set keybinds
             opts.desc = "Show LSP references"
             vim.keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
@@ -49,7 +48,7 @@ return {
             vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 
             opts.desc = "Go to next diagnostic"
-            vim.keymap.set("n", "]d", vim.diagnostic.goto_, opts)
+            vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
             opts.desc = "Show documentation for what is under cursor"
             vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
