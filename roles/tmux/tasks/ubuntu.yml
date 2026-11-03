@@ -7,7 +7,7 @@
 
 - name: "tmux | Get stats on existing .{{ conf_filename }}"
   ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.{{ conf_filename }}"
+    path: "{{ ansible_facts['user_dir'] }}/.{{ conf_filename }}"
   register: stat_result
 
 #- name: "tmux | Debug stat results"
@@ -21,7 +21,7 @@
 
 - name: "tmux | Copy old dotfile"
   ansible.builtin.copy:
-    src: "{{ ansible_user_dir }}/.{{ conf_filename }}"
+    src: "{{ ansible_facts['user_dir'] }}/.{{ conf_filename }}"
     dest: "{{ backup_dir }}"
   when: stat_result.stat.islnk is defined and stat_result.stat.islnk == False and first_run.stat.islnk is not defined
 
