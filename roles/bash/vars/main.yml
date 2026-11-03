@@ -9,8 +9,8 @@ old_dotfiles:
   - .functions
   - .path
 
-first_run: "{{ ansible_user_dir }}/.dotfiles_run"
+first_run: "{{ ansible_facts['user_dir'] }}/.dotfiles_run"
 
-backup_dir: "{{ ansible_user_dir }}/.dotfiles_backup"
+backup_dir: "{{ ansible_facts['user_dir'] }}/.dotfiles_backup"
 
 now_script: "now"
