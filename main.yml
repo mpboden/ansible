@@ -17,7 +17,14 @@
 
     - name: Set roles
       ansible.builtin.set_fact:
-        run_roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or core_roles + laptop_roles | default([]) | difference(exclude_roles | default([])) }}"
+:w        run_roles: >-
+          {% set default_excluded_roles = (exclude_roles | default([])) -%}
+          {%- if ansible_run_tags | list == ['all'] -%}
+          {{ core_roles | reject('in', default_excluded_roles) | list }}
+          {%- else -%}
+          {{ ((core_roles | select('in', ansible_run_tags) | list) + (ansible_run_tags | reject('in', default_roles) | reject('equalto', 'all') | list)) | reject('>
+          {%- endif -%}
+
       tags:
         - always
 
