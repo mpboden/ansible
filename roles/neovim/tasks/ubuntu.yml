@@ -17,12 +17,12 @@
 - name: "Neovim | Add repository"
    ansible.builtin.deb822_repository:
      name: "neovim-ppa"
-     types: "deb"
-     uris: "https://launchpadcontent.net"
+     types: deb
+     uris: https://launchpadcontent.net
      suites: "{{ ansible_facts['distribution_release'] }}"
-     components: "main"
-     signed_by: "https://ubuntu.com"
-     state: "present"
+     components: main
+     signed_by: https://ubuntu.com
+     state: present
      become: true
 
 - name: "Neovim | Create a directory if it does not exist"
