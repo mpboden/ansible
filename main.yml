@@ -17,7 +17,7 @@
 
     - name: Set roles
       ansible.builtin.set_fact:
-:w        run_roles: >-
+        run_roles: >-
           {% set default_excluded_roles = (exclude_roles | default([])) -%}
           {%- if ansible_run_tags | list == ['all'] -%}
           {{ core_roles | reject('in', default_excluded_roles) | list }}
