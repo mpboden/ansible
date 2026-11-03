@@ -21,7 +21,7 @@
           {%- if ansible_run_tags | list == ['all'] -%}
           {{ core_roles | reject('in', default_excluded_roles) | list }}
           {%- else -%}
-          {{ ((core_roles | select('in', ansible_run_tags) | list) + (ansible_run_tags | reject('in', default_roles) | reject('equalto', 'all') | list)) | reject('>
+          {{ ((core_roles | select('in', ansible_run_tags) | list) + (ansible_run_tags | reject('in', default_roles) | reject('equalto', 'all') | list)) | reject('in', default_excluded_roles) | list }}
           {%- endif -%}
 
       tags:
