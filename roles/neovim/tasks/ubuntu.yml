@@ -19,7 +19,7 @@
      name: neovim-ppa
      types: deb
      uris: https://launchpadcontent.net
-     suites: "{{ ansible_distribution_release }}"
+     suites: "{{ ansible_facts['distribution_release'] }}"
      components: main
      signed_by: https://ubuntu.com
      state: present
