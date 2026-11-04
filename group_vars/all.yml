@@ -13,35 +13,11 @@ git_user_email: !vault |
 core_roles:
   - bash
   - nala
-#  - neovim
   - ssh
   - tmux
   - tree
-  # - lua
   - ethtool
   - fzf
-
-laptop_roles:
-  - build-essential
-  - gimp
-  - git
-  - gnome-settings
-  - gparted
-  - keepassxc
-  - putty
-  - remmina
-  - virtualbox
-
-home_roles:
-  #  - fail2ban
-  #  - fio
-  #  - iotop
-  #  - samba
-  - reboot
-
-sebastopol_roles:
-  # - fail2ban
-  - reboot
 
 ansible_become_pass: !vault |
           $ANSIBLE_VAULT;1.1;AES256
