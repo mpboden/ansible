@@ -73,7 +73,7 @@ printTime=					# will be set to true if space terminal width permits
 if type "curl" > /dev/null; then
   ipaddress=`curl -s ipinfo.io/ip`
   #city=`curl ipinfo.io/${ipaddress}/city --silent`
-  location="95472"
+  location="Sebastopol\x2c%20CA"
   
   if [[ $ipaddress == "67"* ]]; then
       location="Universal%20City"
